@@ -357,7 +357,7 @@ struct HubMainView: View {
                             .padding(.horizontal)
                             .padding(.top, 30)
                         
-                        Color.clear.frame(height: 20)
+                        Color.clear.frame(height: 80)
                     }
                 }
             }

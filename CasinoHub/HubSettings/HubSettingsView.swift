@@ -277,6 +277,8 @@ struct HubSettingsView: View {
                             .frame(height: 176)
                             .cornerRadius(16)
                             .padding(.horizontal)
+                        
+                        Color.clear.frame(height: 80)
                     }
                 }
             }

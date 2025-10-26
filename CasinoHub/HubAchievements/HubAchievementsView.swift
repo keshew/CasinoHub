@@ -186,6 +186,8 @@ struct HubAchievementsView: View {
                                             .cornerRadius(24)
                                     }
                                 }
+                                
+                                Color.clear.frame(height: 80)
                             }
                             .padding(.horizontal)
                             .padding(.top)
