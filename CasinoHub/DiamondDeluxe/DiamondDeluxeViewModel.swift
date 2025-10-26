@@ -3,8 +3,8 @@ import SwiftUI
 class DiamondDeluxeViewModel: ObservableObject {
     let contact = DiamondDeluxeModel()
     @Published var slots: [[String]] = []
-    @Published var coin =  1000
-    @Published var bet = 10
+    @Published var coin =   UserDefaultsManager.shared.coins
+    @Published var bet = 100
     let allFruits = ["diamond1", "diamond2", "diamond3"]
     @Published var winningPositions: [(row: Int, col: Int)] = []
     @Published var isSpinning = false
@@ -39,14 +39,15 @@ class DiamondDeluxeViewModel: ObservableObject {
     }
     
     func spin() {
-        
-        
-        coin -= bet
+        UserDefaultsManager.shared.removeCoins(bet)
+        coin =  UserDefaultsManager.shared.coins
+        UserDefaultsManager.shared.incrementTotalGames()
         isSpinning = true
         spinningTimer?.invalidate()
         winningPositions.removeAll()
         win = 0
-        
+        UserDefaultsManager.shared.addActivity(GameActivity(gameName: "Diamond Deluxe", amount: -bet))
+        UserDefaultsManager.shared.addProgress(10) 
         let columns = 5
         for col in 0..<columns {
             let delay = Double(col) * 0.4
@@ -122,9 +123,11 @@ class DiamondDeluxeViewModel: ObservableObject {
         }
         
         if totalWin != 0 {
-            coin -= bet
-            win = (totalWin + bet)
+            win = totalWin
             isWin = true
+            UserDefaultsManager.shared.addCoins(totalWin)
+            coin = UserDefaultsManager.shared.coins
+            UserDefaultsManager.shared.addActivity(GameActivity(gameName: "Diamond Deluxe", amount: totalWin))
         }
     }
 }

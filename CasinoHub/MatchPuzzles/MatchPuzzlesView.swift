@@ -1,19 +1,19 @@
 import SwiftUI
 
 struct MatchPuzzlesView: View {
-    @StateObject var viewModel =  MatchPuzzlesViewModel()
+    @StateObject var classicFruitModel =  MatchPuzzlesViewModel()
     @Environment(\.presentationMode) var presentationMode
     let columns = Array(repeating: GridItem(.fixed(70), spacing: 0), count: 5)
     
     var body: some View {
         ZStack {
             ZStack(alignment: .top) {
-                Image(.bg)
+                Image(.bgFruit)
                     .resizable()
                 
-                LinearGradient(colors: [Color(red: 15/255, green: 51/255, blue: 69/255),
-                                        Color(red: 24/255, green: 36/255, blue: 86/255),
-                                        Color(red: 14/255, green: 47/255, blue: 46/255)], startPoint: .top, endPoint: .bottom).opacity(0.7)
+                LinearGradient(colors: [Color(red: 81/255, green: 15/255, blue: 36/255),
+                                        Color(red: 77/255, green: 14/255, blue: 25/255),
+                                        Color(red: 60/255, green: 15/255, blue: 102/255)], startPoint: .top, endPoint: .bottom).opacity(0.9)
             }
             .ignoresSafeArea()
             
@@ -55,7 +55,7 @@ struct MatchPuzzlesView: View {
                                             .resizable()
                                             .frame(width: 27, height: 27)
                                         
-                                        Text("\(viewModel.balance)")
+                                        Text("\(classicFruitModel.coin)")
                                             .FontRegular(size: 16, color: Color(red: 255/255, green: 249/255, blue: 194/255))
                                     }
                                 }
@@ -66,32 +66,32 @@ struct MatchPuzzlesView: View {
                 .padding(.horizontal)
                 
                 VStack(spacing: 8) {
-                    Text("Mines Game")
+                    Text("Match-3 Puzzle")
                         .FontSemiBold(size: 24)
                     
-                    Text("Click tiles to reveal coins, avoid the mines!")
-                        .FontRegular(size: 16, color: Color(red: 83/255, green: 234/255, blue: 253/255))
+                    Text("Match gems to earn points and win!")
+                        .FontRegular(size: 16, color: Color(red: 253/255, green: 165/255, blue: 213/255))
                 }
                 
                 ScrollView(showsIndicators: false) {
                     VStack {
                         HStack(spacing: 16) {
                             Rectangle()
-                                .fill(LinearGradient(colors: [Color(red: 15/255, green: 78/255, blue: 99/255).opacity(0.6),
-                                                              Color(red: 1/255, green: 95/255, blue: 120/255).opacity(0.6)], startPoint: .top, endPoint: .bottom))
+                                .fill(LinearGradient(colors: [Color(red: 89/255, green: 22/255, blue: 139/255).opacity(0.6),
+                                                              Color(red: 110/255, green: 17/255, blue: 176/255).opacity(0.6)], startPoint: .top, endPoint: .bottom))
                                 .overlay {
                                     RoundedRectangle(cornerRadius: 18)
-                                        .stroke(Color(red: 0/255, green: 210/255, blue: 242/255).opacity(0.3), lineWidth: 5)
+                                        .stroke(Color(red: 194/255, green: 122/255, blue: 255/255).opacity(0.3), lineWidth: 5)
                                         .overlay {
                                             VStack(spacing: 4) {
-                                                Image(.dollar)
+                                                Image(.scorePuzzle)
                                                     .resizable()
                                                     .frame(width: 24, height: 24)
                                                 
-                                                Text("Current Win")
-                                                    .FontRegular(size: 14, color: Color(red: 83/255, green: 234/255, blue: 253/255))
+                                                Text("Score")
+                                                    .FontRegular(size: 14, color: Color(red: 217/255, green: 179/255, blue: 255/255))
                                                 
-                                                Text("\(viewModel.win)")
+                                                Text("\(classicFruitModel.score)")
                                                     .FontRegular(size: 20)
                                             }
                                         }
@@ -100,21 +100,21 @@ struct MatchPuzzlesView: View {
                                 .cornerRadius(18)
                             
                             Rectangle()
-                                .fill(LinearGradient(colors: [Color(red: 28/255, green: 57/255, blue: 142/255).opacity(0.6),
-                                                              Color(red: 24/255, green: 60/255, blue: 184/255).opacity(0.6)], startPoint: .top, endPoint: .bottom))
+                                .fill(LinearGradient(colors: [Color(red: 134/255, green: 17/255, blue: 67/255).opacity(0.6),
+                                                              Color(red: 163/255, green: 0/255, blue: 76/255).opacity(0.6)], startPoint: .top, endPoint: .bottom))
                                 .overlay {
                                     RoundedRectangle(cornerRadius: 18)
-                                        .stroke(Color(red: 81/255, green: 162/255, blue: 255/255).opacity(0.3), lineWidth: 5)
+                                        .stroke(Color(red: 251/255, green: 100/255, blue: 182/255).opacity(0.3), lineWidth: 5)
                                         .overlay {
                                             VStack(spacing: 4) {
-                                                Image(.mult)
+                                                Image(.movePuzzle)
                                                     .resizable()
                                                     .frame(width: 24, height: 24)
                                                 
-                                                Text("Multiplier")
-                                                    .FontRegular(size: 14, color: Color(red: 141/255, green: 197/255, blue: 255/255))
+                                                Text("Moves")
+                                                    .FontRegular(size: 14, color: Color(red: 217/255, green: 179/255, blue: 255/255))
                                                 
-                                                Text("\(viewModel.correctAnswersCount)")
+                                                Text("\(classicFruitModel.moves)")
                                                     .FontRegular(size: 20)
                                             }
                                         }
@@ -129,22 +129,21 @@ struct MatchPuzzlesView: View {
                                                           Color(red: 30/255, green: 41/255, blue: 57/255).opacity(0.7)], startPoint: .top, endPoint: .bottom))
                             .overlay {
                                 RoundedRectangle(cornerRadius: 18)
-                                    .stroke(Color(red: 253/255, green: 199/255, blue: 2/255).opacity(0.3), lineWidth: 5)
+                                    .stroke(Color(red: 246/255, green: 51/255, blue: 154/255).opacity(0.3), lineWidth: 5)
                                     .overlay {
                                         VStack(spacing: 10) {
-                                            LazyVGrid(columns: columns, spacing: 16) {
-                                                ForEach(viewModel.cards.indices, id: \.self) { index in
-                                                    let card = viewModel.cards[index]
-                                                    Button(action: {
-                                                        viewModel.openCard(at: index)
-                                                    }) {
-                                                        if card.isOpened {
+                                            ForEach(0..<6, id: \.self) { row in
+                                                HStack(spacing: 0) {
+                                                    ForEach(0..<6, id: \.self) { col in
+                                                        Button(action: {
+                                                            classicFruitModel.selectPosition(row: row, col: col)
+                                                        }) {
                                                             Rectangle()
                                                                 .fill(
                                                                     LinearGradient(
-                                                                        colors: card.isBomb
-                                                                        ? [Color.red.opacity(0.8), Color.red.opacity(0.6)]
-                                                                        : [Color.green.opacity(0.7), Color.green.opacity(0.4)],
+                                                                        colors: classicFruitModel.selectedPositions.contains(where: { $0.row == row && $0.col == col }) ?
+                                                                        [Color.blue.opacity(0.6), Color.blue.opacity(0.3)] :
+                                                                        [Color.black.opacity(0.2), Color.black.opacity(0.2)],
                                                                         startPoint: .topLeading,
                                                                         endPoint: .bottomTrailing
                                                                     )
@@ -152,83 +151,56 @@ struct MatchPuzzlesView: View {
                                                                 .overlay {
                                                                     RoundedRectangle(cornerRadius: 14)
                                                                         .stroke(
-                                                                            card.isBomb
-                                                                            ? Color.red.opacity(0.9)
-                                                                            : Color.green.opacity(0.9),
+                                                                            classicFruitModel.selectedPositions.contains(where: { $0.row == row && $0.col == col }) ?
+                                                                            Color.blue.opacity(0.8) : Color.white.opacity(0.3),
                                                                             lineWidth: 3
                                                                         )
                                                                         .overlay(
-                                                                            Image(card.image)
+                                                                            Image(classicFruitModel.slots[row][col])
                                                                                 .resizable()
                                                                                 .aspectRatio(contentMode: .fit)
-                                                                                .frame(width: 38, height: 42)
+                                                                                .frame(width: 23, height: 23)
                                                                         )
                                                                 }
-                                                                .frame(width: 50, height: 50)
+                                                                .frame(width: 41, height: 41)
                                                                 .cornerRadius(14)
                                                                 .padding(.horizontal, 5)
                                                                 .shadow(
-                                                                    color: card.isBomb
-                                                                    ? Color.red.opacity(0.8)
-                                                                    : Color.green.opacity(0.7),
-                                                                    radius: 10
+                                                                    color: classicFruitModel.winningPositions.contains(where: { $0.row == row && $0.col == col }) ? Color.white : .clear,
+                                                                    radius: classicFruitModel.isSpinning ? 0 : 25
                                                                 )
-                                                        } else {
-                                                            Rectangle()
-                                                                .fill(
-                                                                    LinearGradient(
-                                                                        colors: [Color.white.opacity(0.2), Color.white.opacity(0.1)],
-                                                                        startPoint: .topLeading,
-                                                                        endPoint: .bottomTrailing
-                                                                    )
-                                                                )
-                                                                .overlay(
-                                                                    RoundedRectangle(cornerRadius: 16)
-                                                                        .stroke(Color.white.opacity(0.3), lineWidth: 3)
-                                                                        .overlay(
-                                                                            Text("?")
-                                                                                .FontRegular(size: 24, color: .white.opacity(0.4))
-                                                                        )
-                                                                )
-                                                                .frame(width: 50, height: 50)
-                                                                .cornerRadius(16)
-                                                                .padding(.horizontal, 5)
                                                         }
                                                     }
-                                                    .disabled(card.isOpened || !viewModel.isPlaying)
                                                 }
                                             }
-                                            .padding()
-                                            .disabled(!viewModel.isPlaying)
                                         }
                                     }
                             }
-                            .frame(height: 312)
+                            .frame(height: 342)
                             .cornerRadius(18)
                             .padding(.horizontal)
                             .padding(.top)
                         
                         Button(action: {
-                            if viewModel.isPlaying {
-                                viewModel.getReward()
-                            } else {
-                                viewModel.startGame()
-                            }
+                            classicFruitModel.isGameStarted = true
+                            classicFruitModel.resetSlots()
+                            classicFruitModel.moves = 0
+                            classicFruitModel.score = 0
                         }) {
                             Rectangle()
-                                .fill(LinearGradient(colors: [Color(red: 1/255, green: 146/255, blue: 184/255),
-                                                              Color(red: 21/255, green: 93/255, blue: 251/255),
-                                                              Color(red: 1/255, green: 150/255, blue: 138/255)], startPoint: .leading, endPoint: .trailing))
+                                .fill(LinearGradient(colors: [Color(red: 230/255, green: 0/255, blue: 117/255),
+                                                              Color(red: 225/255, green: 32/255, blue: 86/255),
+                                                              Color(red: 152/255, green: 16/255, blue: 251/255)], startPoint: .leading, endPoint: .trailing))
                                 .overlay {
                                     RoundedRectangle(cornerRadius: 24)
-                                        .stroke(Color(red: 0/255, green: 210/255, blue: 242/255).opacity(0.5), lineWidth: 3)
+                                        .stroke(Color(red: 251/255, green: 100/255, blue: 182/255).opacity(0.5), lineWidth: 3)
                                         .overlay {
                                             HStack {
                                                 Image(.whiteTheme)
                                                     .resizable()
                                                     .frame(width: 13, height: 13)
                                                 
-                                                Text(viewModel.isPlaying ? "Get Reward" : "Start Game (\(viewModel.bet) coins)")
+                                                Text("Start")
                                                     .FontSemiBold(size: 18)
                                                 
                                                 Image(.whiteTheme)
@@ -242,6 +214,7 @@ struct MatchPuzzlesView: View {
                                 .padding(.horizontal)
                                 .padding(.top)
                         }
+                        .opacity(classicFruitModel.isGameStarted ? 0 : 1)
                     }
                     .padding(.top)
                 }

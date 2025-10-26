@@ -2,6 +2,13 @@ import SwiftUI
 
 struct HubSlotsView: View {
     @StateObject var hubSlotsModel =  HubSlotsViewModel()
+    @State var isFruit = false
+    @State var isGem = false
+    @State var isRoyal = false
+    @State var isMagic = false
+    @State var isStars = false
+    @State var isDeluxe = false
+    
     var arrayGames = [Games(name: "Classic Fruits",
                             imageName: "slot1",
                             desc: "Traditional slot with cherries, lemons, and bars",
@@ -126,7 +133,22 @@ struct HubSlotsView: View {
                                                             .padding(.top, 10)
                                                             
                                                             Button(action: {
-                                                                
+                                                                switch item.name {
+                                                                case "Classic Fruits":
+                                                                    isFruit = true
+                                                                case "Gem Rush":
+                                                                    isGem = true
+                                                                case "Royal Palace":
+                                                                    isRoyal = true
+                                                                case "Magic Spin":
+                                                                    isMagic = true
+                                                                case "Lucky Stars":
+                                                                    isStars = true
+                                                                case "Diamond Deluxe":
+                                                                    isDeluxe = true
+                                                                default:
+                                                                    break
+                                                                }
                                                             }) {
                                                                 Rectangle()
                                                                     .fill(.white.opacity(0.2))
@@ -170,6 +192,24 @@ struct HubSlotsView: View {
                     }
                 }
             }
+        }
+        .fullScreenCover(isPresented: $isFruit) {
+            ClassicFruitView()
+        }
+        .fullScreenCover(isPresented: $isGem) {
+            GemRushView()
+        }
+        .fullScreenCover(isPresented: $isRoyal) {
+            RoyalPalaceView()
+        }
+        .fullScreenCover(isPresented: $isMagic) {
+            MagicSpinView()
+        }
+        .fullScreenCover(isPresented: $isStars) {
+            LuckyStarsView()
+        }
+        .fullScreenCover(isPresented: $isDeluxe) {
+            DiamondDeluxeView()
         }
     }
 }

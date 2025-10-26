@@ -85,7 +85,7 @@ struct GemRushView: View {
                                 RoundedRectangle(cornerRadius: 18)
                                     .stroke(Color(red: 52/255, green: 165/255, blue: 129/255), lineWidth: 5)
                                     .overlay {
-                                        Text("Win:1000")
+                                        Text("Win:\(classicFruitModel.win)")
                                             .FontRegular(size: 26, color: Color(red: 255/255, green: 215/255, blue: 0/255))
                                             .outlineText(color: .white, width: 0.4)
                                     }
@@ -203,7 +203,9 @@ struct GemRushView: View {
                             .padding(.top, 32)
                         
                         Button(action: {
-                            classicFruitModel.spin()
+                            if classicFruitModel.coin >= classicFruitModel.bet {
+                                classicFruitModel.spin()
+                            }
                         }) {
                             Rectangle()
                                 .fill(LinearGradient(colors: [Color(red: 241/255, green: 177/255, blue: 0/255),
@@ -222,6 +224,7 @@ struct GemRushView: View {
                                 .padding(.horizontal)
                                 .padding(.top, 32)
                         }
+                        .disabled(classicFruitModel.isSpinning)
                     }
                     .padding(.top)
                 }

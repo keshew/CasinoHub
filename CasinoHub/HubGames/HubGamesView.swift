@@ -12,6 +12,9 @@ struct Games: Identifiable {
 
 struct HubGamesView: View {
     @StateObject var hubGamesModel =  HubGamesViewModel()
+    @State var isMatch = false
+    @State var isMines = false
+    @State var isScratch = false
     var arrayGames = [Games(name: "Match-3 Puzzle",
                             imageName: "game2",
                             desc: "Match 3 or more gems in a row to score points and win coins",
@@ -119,7 +122,16 @@ struct HubGamesView: View {
                                                     .padding(.horizontal)
                                                     
                                                     Button(action: {
-                                                        
+                                                        switch item.name {
+                                                        case "Match-3 Puzzle":
+                                                            isMatch = true
+                                                        case "Mines Game":
+                                                            isMines = true
+                                                        case "Scratch Card":
+                                                            isScratch = true
+                                                        default:
+                                                            break
+                                                        }
                                                     }) {
                                                         Rectangle()
                                                             .fill(.white.opacity(0.2))
@@ -176,6 +188,15 @@ struct HubGamesView: View {
                     }
                 }
             }
+        }
+        .fullScreenCover(isPresented: $isMatch) {
+            MatchPuzzlesView()
+        }
+        .fullScreenCover(isPresented: $isMines) {
+            MinesView()
+        }
+        .fullScreenCover(isPresented: $isScratch) {
+            ScratchCardsView()
         }
     }
 }

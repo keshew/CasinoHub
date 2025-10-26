@@ -3,8 +3,8 @@ import SwiftUI
 class LuckyStarsViewModel: ObservableObject {
     let contact = LuckyStarsModel()
     @Published var slots: [[String]] = []
-    @Published var coin =  1000
-    @Published var bet = 10
+    @Published var coin =  UserDefaultsManager.shared.coins
+    @Published var bet = 30
     let allFruits = ["lucky1", "lucky2", "lucky3"]
     @Published var winningPositions: [(row: Int, col: Int)] = []
     @Published var isSpinning = false
@@ -39,14 +39,15 @@ class LuckyStarsViewModel: ObservableObject {
     }
     
     func spin() {
-        
-        
-        coin -= bet
+        UserDefaultsManager.shared.removeCoins(bet)
+        coin =  UserDefaultsManager.shared.coins
+        UserDefaultsManager.shared.incrementTotalGames()
         isSpinning = true
         spinningTimer?.invalidate()
         winningPositions.removeAll()
         win = 0
-        
+        UserDefaultsManager.shared.addActivity(GameActivity(gameName: "Lucky Stars", amount: -bet))
+        UserDefaultsManager.shared.addProgress(10) 
         let columns = 5
         for col in 0..<columns {
             let delay = Double(col) * 0.4
@@ -122,9 +123,11 @@ class LuckyStarsViewModel: ObservableObject {
         }
         
         if totalWin != 0 {
-            coin -= bet
-            win = (totalWin + bet)
+            win = totalWin
             isWin = true
+            UserDefaultsManager.shared.addCoins(totalWin)
+            coin = UserDefaultsManager.shared.coins
+            UserDefaultsManager.shared.addActivity(GameActivity(gameName: "Lucky Stars", amount: totalWin))
         }
     }
 }

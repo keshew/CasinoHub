@@ -8,7 +8,7 @@ struct HubTabBarView: View {
         ZStack(alignment: .bottom) {
             VStack {
                 if selectedTab == .Home {
-                    HubMainView()
+                    HubMainView(selectedTab: $selectedTab)
                 } else if selectedTab == .Slots {
                     HubSlotsView()
                 } else if selectedTab == .Games {

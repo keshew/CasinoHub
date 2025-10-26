@@ -2,6 +2,17 @@ import SwiftUI
 
 struct HubMainView: View {
     @StateObject var hubMainModel =  HubMainViewModel()
+    @Binding var selectedTab: CustomTabBar.TabType
+    @State var isMatch = false
+    @State var isMines = false
+    @State var isScratch = false
+    @State private var level: Int = max(1, UserDefaultsManager.shared.level)
+    @State private var progress: Int = UserDefaultsManager.shared.progress
+    private let pointsPerLevel = 100
+    
+    private func progressBarWidth(proxyWidth: CGFloat) -> CGFloat {
+        return CGFloat(progress) / CGFloat(pointsPerLevel) * proxyWidth
+    }
     
     var body: some View {
         ZStack {
@@ -51,7 +62,7 @@ struct HubMainView: View {
                                                                     .resizable()
                                                                     .frame(width: 20, height: 20)
                                                                 
-                                                                Text("1500")
+                                                                Text("\(UserDefaultsManager.shared.coins)")
                                                                     .FontRegular(size: 16, color: Color(red: 255/255, green: 241/255, blue: 186/255))
                                                             }
                                                         }
@@ -59,25 +70,24 @@ struct HubMainView: View {
                                                 .frame(height: 44)
                                                 .cornerRadius(20)
                                             
-                                            Rectangle()
-                                                .fill(Color(red: 0/255, green: 210/255, blue: 242/255).opacity(0.2))
-                                                .overlay {
-                                                    RoundedRectangle(cornerRadius: 20)
-                                                        .stroke(Color(red: 13/255, green: 153/255, blue: 255/255), lineWidth: 2)
-                                                        .overlay {
-                                                            HStack {
-                                                                Image(.menu2)
-                                                                    .resizable()
-                                                                    .frame(width: 20, height: 20)
-                                                                
-                                                                Text("100")
-                                                                    .FontRegular(size: 16, color: Color(red: 188/255, green: 245/255, blue: 252/255))
-                                                            }
-                                                        }
-                                                }
-                                                .frame(height: 44)
-                                                .cornerRadius(20)
-                                            
+//                                            Rectangle()
+//                                                .fill(Color(red: 0/255, green: 210/255, blue: 242/255).opacity(0.2))
+//                                                .overlay {
+//                                                    RoundedRectangle(cornerRadius: 20)
+//                                                        .stroke(Color(red: 13/255, green: 153/255, blue: 255/255), lineWidth: 2)
+//                                                        .overlay {
+//                                                            HStack {
+//                                                                Image(.menu2)
+//                                                                    .resizable()
+//                                                                    .frame(width: 20, height: 20)
+//                                                                
+//                                                                Text("100")
+//                                                                    .FontRegular(size: 16, color: Color(red: 188/255, green: 245/255, blue: 252/255))
+//                                                            }
+//                                                        }
+//                                                }
+//                                                .frame(height: 44)
+//                                                .cornerRadius(20)
                                             
                                             Rectangle()
                                                 .fill(Color(red: 194/255, green: 122/255, blue: 255/255).opacity(0.2))
@@ -90,7 +100,7 @@ struct HubMainView: View {
                                                                     .resizable()
                                                                     .frame(width: 20, height: 20)
                                                                 
-                                                                Text("Lvl 1")
+                                                                Text("Lvl \(level)")
                                                                     .FontRegular(size: 16, color: Color(red: 153/255, green: 133/255, blue: 172/255))
                                                             }
                                                         }
@@ -102,19 +112,18 @@ struct HubMainView: View {
                                         VStack(spacing: 8) {
                                             ZStack(alignment: .leading) {
                                                 Rectangle()
-                                                    .fill(Color(red: 35/255, green: 37/255, blue: 66/255))
-                                                    .overlay {
-                                                        RoundedRectangle(cornerRadius: 10)
-                                                            .stroke(Color(red: 76/255, green: 47/255, blue: 123/255), lineWidth: 2)
-                                                    }
-                                                    .frame(width: 338, height: 12)
-                                                    .cornerRadius(10)
+                                                    .frame(height: 10)
+                                                    .cornerRadius(5)
+                                                    .foregroundColor(Color.gray.opacity(0.3))
                                                 
                                                 Rectangle()
-                                                    .fill(Color(red: 181/255, green: 130/255, blue: 43/255))
-                                                    .frame(width: 228, height: 10)
-                                                    .cornerRadius(10)
+                                                    .frame(width: progressBarWidth(proxyWidth: 300), height: 10)
+                                                    .cornerRadius(5)
+                                                    .foregroundColor(Color.purple)
                                             }
+                                            .frame(height: 10)
+                                            .frame(maxWidth: 338)
+
                                             
                                             HStack {
                                                 Text("Experience")
@@ -122,7 +131,7 @@ struct HubMainView: View {
                                                 
                                                 Spacer()
                                                 
-                                                Text("0 / 100 XP")
+                                                Text("\(progress) / \(pointsPerLevel) XP")
                                                     .FontRegular(size: 12, color: Color(red: 217/255, green: 179/255, blue: 255/255))
                                             }
                                         }
@@ -157,7 +166,7 @@ struct HubMainView: View {
                                                         .FontRegular(size: 16, color: Color(red: 230/255, green: 213/255, blue: 248/255))
                                                     
                                                     Button(action: {
-                                                        
+                                                        selectedTab = .Slots
                                                     }) {
                                                         Rectangle()
                                                             .fill(Color(red: 137/255, green: 94/255, blue: 185/255).opacity(0.6))
@@ -200,7 +209,7 @@ struct HubMainView: View {
                                                         .FontRegular(size: 16, color: Color(red: 248/255, green: 214/255, blue: 222/255))
                                                     
                                                     Button(action: {
-                                                        
+                                                        isMatch = true
                                                     }) {
                                                         Rectangle()
                                                             .fill(Color(red: 137/255, green: 94/255, blue: 185/255).opacity(0.6))
@@ -245,7 +254,7 @@ struct HubMainView: View {
                                                         .FontRegular(size: 16, color: Color(red: 213/255, green: 223/255, blue: 247/255))
                                                     
                                                     Button(action: {
-                                                        
+                                                        isMines = true
                                                     }) {
                                                         Rectangle()
                                                             .fill(Color(red: 137/255, green: 94/255, blue: 185/255).opacity(0.6))
@@ -288,7 +297,7 @@ struct HubMainView: View {
                                                         .FontRegular(size: 16, color: Color(red: 247/255, green: 238/255, blue: 209/255))
                                                     
                                                     Button(action: {
-                                                        
+                                                        isScratch = true
                                                     }) {
                                                         Rectangle()
                                                             .fill(Color(red: 137/255, green: 94/255, blue: 185/255).opacity(0.6))
@@ -362,10 +371,19 @@ struct HubMainView: View {
                 }
             }
         }
+        .fullScreenCover(isPresented: $isMatch) {
+            MatchPuzzlesView()
+        }
+        .fullScreenCover(isPresented: $isMines) {
+            MinesView()
+        }
+        .fullScreenCover(isPresented: $isScratch) {
+            ScratchCardsView()
+        }
     }
 }
 
 #Preview {
-    HubMainView()
+    HubMainView(selectedTab: .constant(.Home))
 }
 

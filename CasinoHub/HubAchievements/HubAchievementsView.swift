@@ -1,8 +1,22 @@
 import SwiftUI
 
+struct Achiev: Identifiable, Codable {
+    var id = UUID()
+    var name: String
+    var desc: String
+    var goal: Int
+    var currentGoal: Int
+    var isUnlocked = false
+}
 struct HubAchievementsView: View {
     @StateObject var hubAchievementsModel =  HubAchievementsViewModel()
-
+    var achiev = [Achiev(name: "First Spin", desc: "Spin your first slot machine", goal: 1, currentGoal: 0),
+                  Achiev(name: "Lucky Winner", desc: "Win 1000 coins in a single spin", goal: 1000, currentGoal: 0),
+                  Achiev(name: "Speed Player", desc: "Complete 50 spins in one session", goal: 50, currentGoal: 0),
+                  Achiev(name: "High Roller", desc: "Bet 100 coins or more", goal: 100, currentGoal: 0),
+                  Achiev(name: "Jackpot Hunter", desc: "Win 10,000 coins in total", goal: 10000, currentGoal: 0),
+                  Achiev(name: "Dedicated Player", desc: "Log in for 7 consecutive days", goal: 7, currentGoal: 0)]
+    
     var body: some View {
         ZStack {
             LinearGradient(colors: [Color(red: 13/255, green: 18/255, blue: 24/255),
@@ -33,7 +47,7 @@ struct HubAchievementsView: View {
                                                 .FontRegular(size: 16, color: Color(red: 232/255, green: 212/255, blue: 255/255))
                                             
                                             HStack(spacing: 5) {
-                                                Text("3")
+                                                Text("0")
                                                     .FontRegular(size: 36)
                                                 
                                                 Text("/6")
@@ -49,8 +63,8 @@ struct HubAchievementsView: View {
                         
                         ScrollView(showsIndicators: false) {
                             VStack(spacing: 16) {
-                                ForEach(0..<3, id: \.self) { index in
-                                    if 0 == index {
+                                ForEach(achiev, id: \.id) { index in
+                                    if index.isUnlocked {
                                         Rectangle()
                                             .fill(LinearGradient(colors: [Color(red: 116/255, green: 62/255, blue: 14/255).opacity(0.4),
                                                                           Color(red: 123/255, green: 51/255, blue: 14/255).opacity(0.3),
@@ -66,7 +80,7 @@ struct HubAchievementsView: View {
                                                             
                                                             VStack(alignment: .leading, spacing: 10) {
                                                                 HStack {
-                                                                    Text("First Spin")
+                                                                    Text(index.name)
                                                                         .FontRegular(size: 16, color: Color(red: 254/255, green: 252/255, blue: 231/255))
                                                                     
                                                                     Spacer()
@@ -76,7 +90,7 @@ struct HubAchievementsView: View {
                                                                         .frame(width: 20, height: 20)
                                                                 }
                                                                 
-                                                                Text("Spin your first slot machine")
+                                                                Text(index.desc)
                                                                     .FontRegular(size: 14, color: Color(red: 255/255, green: 249/255, blue: 194/255).opacity(0.8))
                                                                 
                                                                 HStack(spacing: 10) {
@@ -134,14 +148,14 @@ struct HubAchievementsView: View {
                                                             
                                                             VStack(alignment: .leading, spacing: 10) {
                                                                 HStack {
-                                                                    Text("First Spin")
+                                                                    Text(index.name)
                                                                         .FontRegular(size: 16, color: Color(red: 254/255, green: 252/255, blue: 231/255))
                                                                  
                                                                     Spacer()
                                                                     
                                                                 }
                                                                 
-                                                                Text("Spin your first slot machine")
+                                                                Text(index.desc)
                                                                     .FontRegular(size: 14, color: Color(red: 255/255, green: 249/255, blue: 194/255).opacity(0.8))
                                                                 
                                                                 HStack(spacing: 20) {

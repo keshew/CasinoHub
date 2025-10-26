@@ -2,7 +2,15 @@ import SwiftUI
 
 struct HubProfileView: View {
     @StateObject var hubProfileModel =  HubProfileViewModel()
-
+    @State private var activities: [GameActivity] = []
+    @State private var level: Int = max(1, UserDefaultsManager.shared.level)
+    @State private var progress: Int = UserDefaultsManager.shared.progress
+    private let pointsPerLevel = 100
+    
+    private func progressBarWidth(proxyWidth: CGFloat) -> CGFloat {
+        return CGFloat(progress) / CGFloat(pointsPerLevel) * proxyWidth
+    }
+    
     var body: some View {
         ZStack {
             LinearGradient(colors: [Color(red: 13/255, green: 18/255, blue: 24/255),
@@ -49,7 +57,7 @@ struct HubProfileView: View {
                                                         RoundedRectangle(cornerRadius: 16)
                                                             .stroke(.black, lineWidth: 4)
                                                             .overlay {
-                                                                Text("1")
+                                                                Text("\(level)")
                                                                     .FontRegular(size: 16, color: .black)
                                                             }
                                                     }
@@ -73,7 +81,7 @@ struct HubProfileView: View {
                                                                     .resizable()
                                                                     .frame(width: 16, height: 16)
                                                                 
-                                                                Text("Level 1 Player")
+                                                                Text("Level \(level) Player")
                                                                     .FontRegular(size: 16, color: Color(red: 232/255, green: 212/255, blue: 255/255))
                                                             }
                                                         }
@@ -83,31 +91,29 @@ struct HubProfileView: View {
                                             
                                             VStack(spacing: 8) {
                                                 HStack {
-                                                    Text("Progress to Level 2")
+                                                    Text("Progress to Level \(level + 1)")
                                                         .FontRegular(size: 14, color: Color(red: 217/255, green: 179/255, blue: 255/255))
                                                     
                                                     Spacer()
                                                     
-                                                    Text("0 / 100 XP")
+                                                    Text("\(progress) / \(pointsPerLevel) XP")
                                                         .FontRegular(size: 14, color: Color(red: 217/255, green: 179/255, blue: 255/255))
                                                 }
                                                 .padding(.horizontal, 20)
                                                 
                                                 ZStack(alignment: .leading) {
                                                     Rectangle()
-                                                        .fill(Color(red: 35/255, green: 37/255, blue: 66/255))
-                                                        .overlay {
-                                                            RoundedRectangle(cornerRadius: 10)
-                                                                .stroke(Color(red: 76/255, green: 47/255, blue: 123/255), lineWidth: 2)
-                                                        }
-                                                        .frame(width: 300, height: 12)
-                                                        .cornerRadius(10)
+                                                        .frame(height: 10)
+                                                        .cornerRadius(5)
+                                                        .foregroundColor(Color.gray.opacity(0.3))
                                                     
                                                     Rectangle()
-                                                        .fill(Color(red: 181/255, green: 130/255, blue: 43/255))
-                                                        .frame(width: 228, height: 10)
-                                                        .cornerRadius(10)
+                                                        .frame(width: progressBarWidth(proxyWidth: 300), height: 10)
+                                                        .cornerRadius(5)
+                                                        .foregroundColor(Color.purple)
                                                 }
+                                                .frame(height: 10)
+                                                .frame(maxWidth: 300)
                                             }
                                         }
                                         .padding(.horizontal)
@@ -136,7 +142,7 @@ struct HubProfileView: View {
                                                         Text("Total Coins")
                                                             .FontRegular(size: 14, color: Color(red: 249/255, green: 224/255, blue: 86/255))
                                                         
-                                                        Text("1 500")
+                                                        Text("\(UserDefaultsManager.shared.coins)")
                                                             .FontRegular(size: 16)
                                                     }
                                                     .padding(.horizontal, 34)
@@ -165,7 +171,7 @@ struct HubProfileView: View {
                                                         Text("Total Wins")
                                                             .FontRegular(size: 14, color: Color(red: 188/255, green: 147/255, blue: 226/255))
                                                         
-                                                        Text("0")
+                                                        Text("\(UserDefaultsManager.shared.totalWin)")
                                                             .FontRegular(size: 16)
                                                     }
                                                     .padding(.horizontal, 34)
@@ -196,7 +202,7 @@ struct HubProfileView: View {
                                                         Text("Biggest Win")
                                                             .FontRegular(size: 14, color: Color(red: 253/255, green: 165/255, blue: 213/255).opacity(0.8))
                                                         
-                                                        Text("0")
+                                                        Text("\(UserDefaultsManager.shared.maxWin)")
                                                             .FontRegular(size: 16)
                                                     }
                                                     .padding(.horizontal, 34)
@@ -225,8 +231,10 @@ struct HubProfileView: View {
                                                         Text("Win Rate")
                                                             .FontRegular(size: 14, color: Color(red: 102/255, green: 191/255, blue: 143/255))
                                                         
-                                                        Text("0")
-                                                            .FontRegular(size: 16)
+                                                        let totalGames = max(1, UserDefaultsManager.shared.totalGames) 
+                                                          let winRate = Double(UserDefaultsManager.shared.totalWin) / (Double(totalGames) * 100)
+                                                          Text(String(format: "%.1f%%", winRate))
+                                                              .FontRegular(size: 16)
                                                     }
                                                     .padding(.horizontal, 34)
                                                     
@@ -260,39 +268,77 @@ struct HubProfileView: View {
                                             }
                                             .padding(.leading)
                                             
-                                            ForEach(0..<3, id: \.self) { index in
-                                                Rectangle()
-                                                    .fill(.black.opacity(0.1))
-                                                    .overlay {
-                                                        RoundedRectangle(cornerRadius: 16)
-                                                            .stroke(Color(red: 82/255, green: 61/255, blue: 98/255), lineWidth: 2)
+                                            VStack(spacing: 20) {
+                                                if activities.count == 0 {
+                                                    ForEach(0..<3, id: \.self) { _ in
+                                                        Rectangle()
+                                                            .fill(Color.black.opacity(0.1))
                                                             .overlay {
-                                                                VStack {
-                                                                    HStack {
-                                                                        Image(.cherry)
-                                                                            .resizable()
-                                                                            .aspectRatio(contentMode: .fit)
-                                                                            .frame(width: 33, height: 40)
-                                                                        
+                                                                RoundedRectangle(cornerRadius: 16)
+                                                                    .stroke(Color(red: 82/255, green: 61/255, blue: 98/255), lineWidth: 2)
+                                                                    .overlay {
                                                                         HStack {
-                                                                            Text("Sound Effects")
+                                                                            Text("No recent activity yet")
                                                                                 .FontRegular(size: 16)
-                                                                            
                                                                             Spacer()
-                                                                            
-                                                                            Text("+250")
-                                                                                .FontRegular(size: 16, color: Color(red: 4/255, green: 223/255, blue: 114/255))
                                                                         }
-                                                                        
-                                                                        Spacer()
+                                                                        .padding(.horizontal)
                                                                     }
-                                                                }
-                                                                .padding(.horizontal)
                                                             }
+                                                            .frame(height: 56)
+                                                            .cornerRadius(16)
+                                                            .padding(.horizontal)
                                                     }
-                                                    .frame(height: 56)
-                                                    .cornerRadius(16)
-                                                    .padding(.horizontal)
+                                                } else {
+                                                    let paddedActivities = activities + Array(repeating: GameActivity(gameName: "", amount: 0), count: max(0, 3 - activities.count))
+                                                    ForEach(0..<3, id: \.self) { index in
+                                                        let activity = paddedActivities[index]
+                                                        if activity.gameName.isEmpty {
+                                                            Rectangle()
+                                                                .fill(Color.black.opacity(0.1))
+                                                                .overlay {
+                                                                    RoundedRectangle(cornerRadius: 16)
+                                                                        .stroke(Color(red: 82/255, green: 61/255, blue: 98/255), lineWidth: 2)
+                                                                        .overlay {
+                                                                            HStack {
+                                                                                Text("No recent activity yet")
+                                                                                    .FontRegular(size: 16)
+                                                                                Spacer()
+                                                                            }
+                                                                            .padding(.horizontal)
+                                                                        }
+                                                                }
+                                                                .frame(height: 56)
+                                                                .cornerRadius(16)
+                                                                .padding(.horizontal)
+                                                        } else {
+                                                            Rectangle()
+                                                                .fill(Color.black.opacity(0.1))
+                                                                .overlay {
+                                                                    RoundedRectangle(cornerRadius: 16)
+                                                                        .stroke(Color(red: 82/255, green: 61/255, blue: 98/255), lineWidth: 2)
+                                                                        .overlay {
+                                                                            HStack {
+                                                                                HStack {
+                                                                                    Text(activity.gameName)
+                                                                                        .FontRegular(size: 16)
+                                                                                    Spacer()
+                                                                                    Text(String(format: "%+d", activity.amount))
+                                                                                        .FontRegular(size: 16, color: activity.amount >= 0
+                                                                                                     ? Color(red: 4/255, green: 223/255, blue: 114/255)
+                                                                                                     : .red)
+                                                                                }
+                                                                                Spacer()
+                                                                            }
+                                                                            .padding(.horizontal)
+                                                                        }
+                                                                }
+                                                                .frame(height: 56)
+                                                                .cornerRadius(16)
+                                                                .padding(.horizontal)
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                         .padding(.horizontal)
@@ -306,6 +352,10 @@ struct HubProfileView: View {
                     }
                 }
             }
+        }
+        .onAppear {
+            activities = UserDefaultsManager.shared.lastActivities
+            print(UserDefaultsManager.shared.lastActivities)
         }
     }
 }
