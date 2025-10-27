@@ -39,6 +39,7 @@ class RoyalPalaceViewModel: ObservableObject {
     }
     
     func spin() {
+        UserDefaultsManager.shared.setFirstGamePlayed()
         UserDefaultsManager.shared.removeCoins(bet)
         coin =  UserDefaultsManager.shared.coins
         UserDefaultsManager.shared.incrementTotalGames()

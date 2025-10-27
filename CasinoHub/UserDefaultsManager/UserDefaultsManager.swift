@@ -137,7 +137,11 @@ class UserDefaultsManager {
     }
     
     func setFirstGamePlayed() {
-        defaults.set(1, forKey: "firstGame")
+        let currentValue = defaults.integer(forKey: "firstGame")
+        if currentValue == 0 {
+            addCoins(100)
+            defaults.set(1, forKey: "firstGame")
+        }
     }
 
     func isFirstGamePlayed() -> Bool {

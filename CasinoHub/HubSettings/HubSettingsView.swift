@@ -133,40 +133,6 @@ struct HubSettingsView: View {
                                                         .overlay {
                                                             VStack {
                                                                 HStack {
-                                                                    Image(.settings1)
-                                                                        .resizable()
-                                                                        .frame(width: 48, height: 48)
-                                                                    
-                                                                    VStack(alignment: .leading) {
-                                                                        Text("Sound Effects")
-                                                                            .FontRegular(size: 16)
-                                                                        
-                                                                        Text("Game sounds and audio")
-                                                                            .FontRegular(size: 16, color: isOn ? Color(red: 177/255, green: 75/255, blue: 250/255) : Color(red: 153/255, green: 161/255, blue: 175/255))
-                                                                    }
-                                                                    
-                                                                    Spacer()
-                                                                    
-                                                                    Toggle("", isOn: $hubSettingsModel.isNotifOn)
-                                                                        .toggleStyle(CustomToggleStyle())
-                                                                        .frame(width: 48)
-                                                                }
-                                                            }
-                                                            .padding(.horizontal)
-                                                        }
-                                                }
-                                                .frame(height: 82)
-                                                .cornerRadius(16)
-                                                .padding(.horizontal)
-                                            
-                                            Rectangle()
-                                                .fill(.black.opacity(0.1))
-                                                .overlay {
-                                                    RoundedRectangle(cornerRadius: 16)
-                                                        .stroke(Color(red: 63/255, green: 59/255, blue: 91/255), lineWidth: 2)
-                                                        .overlay {
-                                                            VStack {
-                                                                HStack {
                                                                     Image(.settings2)
                                                                         .resizable()
                                                                         .frame(width: 48, height: 48)
@@ -230,7 +196,7 @@ struct HubSettingsView: View {
                                         .padding(.horizontal)
                                     }
                             }
-                            .frame(height: 340)
+                            .frame(height: 240)
                             .cornerRadius(16)
                             .padding(.horizontal)
                         

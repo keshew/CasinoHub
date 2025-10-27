@@ -21,6 +21,7 @@ struct MatchPuzzlesView: View {
                 HStack {
                     Button(action: {
                         presentationMode.wrappedValue.dismiss()
+                        NotificationCenter.default.post(name: Notification.Name("UserResourcesUpdated"), object: nil)
                     }) {
                         Rectangle()
                             .fill(.white.opacity(0.1))

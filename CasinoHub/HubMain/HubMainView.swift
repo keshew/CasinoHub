@@ -63,7 +63,7 @@ struct HubMainView: View {
                                                                     .resizable()
                                                                     .frame(width: 20, height: 20)
                                                                 
-                                                                Text("\(UserDefaultsManager.shared.coins)")
+                                                                Text("\(hubMainModel.coins)")
                                                                     .FontRegular(size: 16, color: Color(red: 255/255, green: 241/255, blue: 186/255))
                                                             }
                                                         }

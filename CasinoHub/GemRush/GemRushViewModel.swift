@@ -40,6 +40,7 @@ class GemRushViewModel: ObservableObject {
     
     func spin() {
         UserDefaultsManager.shared.removeCoins(bet)
+        UserDefaultsManager.shared.setFirstGamePlayed()
         UserDefaultsManager.shared.incrementTotalGames()
         coin =  UserDefaultsManager.shared.coins
         isSpinning = true

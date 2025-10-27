@@ -40,6 +40,7 @@ class DiamondDeluxeViewModel: ObservableObject {
     
     func spin() {
         UserDefaultsManager.shared.removeCoins(bet)
+        UserDefaultsManager.shared.setFirstGamePlayed()
         coin =  UserDefaultsManager.shared.coins
         UserDefaultsManager.shared.incrementTotalGames()
         isSpinning = true
