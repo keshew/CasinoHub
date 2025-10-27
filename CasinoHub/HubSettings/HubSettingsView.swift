@@ -2,16 +2,20 @@ import SwiftUI
 
 struct HubSettingsView: View {
     @StateObject var hubSettingsModel =  HubSettingsViewModel()
+    @State private var showResetAlert = false
+    @State var isOn = UserDefaults.standard.bool(forKey: "isOn")
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color(red: 13/255, green: 18/255, blue: 24/255),
-                                    Color(red: 60/255, green: 15/255, blue: 102/255),
-                                    Color(red: 30/255, green: 26/255, blue: 77/255)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+            LinearGradient(colors: isOn ? [Color(red: 240/255, green: 213/255, blue: 222/255).opacity(0.8),
+                                           Color(red: 252/255, green: 205/255, blue: 233/255).opacity(0.8),
+                                           Color(red: 252/255, green: 248/255, blue: 248/255).opacity(0.8)] : [Color(red: 13/255, green: 18/255, blue: 24/255),
+                                                                                               Color(red: 60/255, green: 15/255, blue: 102/255),
+                                                                                               Color(red: 30/255, green: 26/255, blue: 77/255)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
             
             VStack(spacing: 32) {
                 Text("Settings")
-                    .FontRegular(size: 16)
+                    .FontRegular(size: 16, color: isOn ? Color(red: 177/255, green: 75/255, blue: 250/255) : .white)
                     .padding(.top)
                 
                 ScrollView(showsIndicators: false) {
@@ -47,24 +51,28 @@ struct HubSettingsView: View {
                                                         .stroke(Color(red: 174/255, green: 70/255, blue: 253/255), lineWidth: 2)
                                                         .overlay {
                                                             HStack {
-                                                                Image(.themeDark)
+                                                                Image(isOn ? "morning" : "themeDark")
                                                                     .resizable()
                                                                     .frame(width: 61, height: 64)
                                                                 
                                                                 Spacer()
                                                                 
                                                                 VStack(alignment: .leading) {
-                                                                    Text("🌙 Neon Night")
+                                                                    Text(isOn ? "☀️ Luxury Morning" : "🌙 Neon Night")
                                                                         .FontRegular(size: 16)
                                                                     
-                                                                    Text("Dark theme active")
+                                                                    Text(isOn ? "Light theme active" : "Dark theme active")
                                                                         .FontRegular(size: 14, color: Color(red: 232/255, green: 212/255, blue: 255/255))
                                                                 }
                                                                 
                                                                 Spacer()
                                                                 
                                                                 Button(action: {
-                                                                    
+                                                                    withAnimation {
+                                                                        isOn.toggle()
+                                                                        UserDefaults.standard.set(isOn, forKey: "isOn")
+                                                                        NotificationCenter.default.post(name: Notification.Name("UserResourcesUpdated"), object: nil)
+                                                                    }
                                                                 }) {
                                                                     Rectangle()
                                                                         .fill(Color(red: 193/255, green: 76/255, blue: 228/255))
@@ -87,7 +95,7 @@ struct HubSettingsView: View {
                                                 .cornerRadius(24)
                                                 .padding(.horizontal)
                                             
-                                            Text("✨ Experience the vibrant neon night\natmosphere")
+                                            Text(isOn ? "✨ Enjoy the elegant luxury morning\nambiance" : "✨ Experience the vibrant neon night\natmosphere")
                                                 .FontRegular(size: 14, color: Color(red: 232/255, green: 212/255, blue: 255/255))
                                                 .multilineTextAlignment(.center)
                                         }
@@ -111,7 +119,7 @@ struct HubSettingsView: View {
                                                     .frame(width: 24, height: 24)
                                                 
                                                 Text("Audio & Notifications")
-                                                    .FontRegular(size: 16)
+                                                    .FontRegular(size: 16, color: isOn ? Color(red: 177/255, green: 75/255, blue: 250/255) : .white)
                                                 
                                                 Spacer()
                                             }
@@ -134,7 +142,7 @@ struct HubSettingsView: View {
                                                                             .FontRegular(size: 16)
                                                                         
                                                                         Text("Game sounds and audio")
-                                                                            .FontRegular(size: 16, color: Color(red: 153/255, green: 161/255, blue: 175/255))
+                                                                            .FontRegular(size: 16, color: isOn ? Color(red: 177/255, green: 75/255, blue: 250/255) : Color(red: 153/255, green: 161/255, blue: 175/255))
                                                                     }
                                                                     
                                                                     Spacer()
@@ -168,7 +176,7 @@ struct HubSettingsView: View {
                                                                             .FontRegular(size: 16)
                                                                         
                                                                         Text("Daily rewards & updates")
-                                                                            .FontRegular(size: 16, color: Color(red: 153/255, green: 161/255, blue: 175/255))
+                                                                            .FontRegular(size: 16, color: isOn ? Color(red: 177/255, green: 75/255, blue: 250/255) : Color(red: 153/255, green: 161/255, blue: 175/255))
                                                                     }
                                                                     
                                                                     Spacer()
@@ -202,7 +210,7 @@ struct HubSettingsView: View {
                                                                             .FontRegular(size: 16)
                                                                         
                                                                         Text("Vibration on actions")
-                                                                            .FontRegular(size: 16, color: Color(red: 153/255, green: 161/255, blue: 175/255))
+                                                                            .FontRegular(size: 16, color: isOn ? Color(red: 177/255, green: 75/255, blue: 250/255) : Color(red: 153/255, green: 161/255, blue: 175/255))
                                                                     }
                                                                     
                                                                     Spacer()
@@ -245,31 +253,41 @@ struct HubSettingsView: View {
                                             }
                                             .padding(.leading)
                                             
-                                            Rectangle()
-                                                .fill(Color(red: 229/255, green: 13/255, blue: 21/255))
-                                                .overlay {
-                                                    RoundedRectangle(cornerRadius: 16)
-                                                        .stroke(Color(red: 243/255, green: 49/255, blue: 57/255), lineWidth: 2)
-                                                        .overlay {
-                                                            VStack {
-                                                                HStack {
-                                                                    Image(.delete)
-                                                                        .resizable()
-                                                                        .frame(width: 16, height: 16)
-                                                                    
-                                                                    Text("Reset Progress")
-                                                                        .FontSemiBold(size: 14)
+                                            Button(action: {
+                                                showResetAlert = true
+                                            }) {
+                                                Rectangle()
+                                                    .fill(Color(red: 229/255, green: 13/255, blue: 21/255))
+                                                    .overlay {
+                                                        RoundedRectangle(cornerRadius: 16)
+                                                            .stroke(Color(red: 243/255, green: 49/255, blue: 57/255), lineWidth: 2)
+                                                            .overlay {
+                                                                VStack {
+                                                                    HStack {
+                                                                        Image(.delete)
+                                                                            .resizable()
+                                                                            .frame(width: 16, height: 16)
+                                                                        
+                                                                        Text("Reset Progress")
+                                                                            .FontSemiBold(size: 14)
+                                                                    }
                                                                 }
+                                                                .padding(.horizontal)
                                                             }
-                                                            .padding(.horizontal)
-                                                        }
+                                                    }
+                                                    .frame(height: 52)
+                                                    .cornerRadius(16)
+                                                    .padding(.horizontal)
+                                            }
+                                            .alert("Are you sure you want to delete all progress?", isPresented: $showResetAlert) {
+                                                Button("Cancel", role: .cancel) {}
+                                                Button("Delete", role: .destructive) {
+                                                    UserDefaultsManager.shared.resetAll()
                                                 }
-                                                .frame(height: 52)
-                                                .cornerRadius(16)
-                                                .padding(.horizontal)
+                                            }
                                             
                                             Text("This will reset all your progress and coins")
-                                                .FontRegular(size: 12, color: Color(red: 255/255, green: 201/255, blue: 201/255).opacity(0.8))
+                                                .FontRegular(size: 12, color: isOn ? Color(red: 177/255, green: 75/255, blue: 250/255) :  Color(red: 255/255, green: 201/255, blue: 201/255).opacity(0.8))
                                         }
                                         .padding(.horizontal)
                                     }

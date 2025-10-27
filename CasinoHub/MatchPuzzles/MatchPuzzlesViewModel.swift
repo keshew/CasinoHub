@@ -3,7 +3,7 @@ import SwiftUI
 class MatchPuzzlesViewModel: ObservableObject {
     let contact = MatchPuzzlesModel()
     @Published var slots: [[String]] = []
-    @Published var coin =  1000
+    @Published var coin =  UserDefaultsManager.shared.coins
     @Published var bet = 10
     let allFruits = ["puzzle1", "puzzle2", "puzzle3", "puzzle4", "puzzle5"]
     @Published var winningPositions: [(row: Int, col: Int)] = []
@@ -57,9 +57,13 @@ class MatchPuzzlesViewModel: ObservableObject {
         let remaining = slots.flatMap { $0 }.filter { !$0.isEmpty }.count
         if remaining == 0 {
             isGameStarted = false
+            UserDefaultsManager.shared.addProgress(10)
+            UserDefaultsManager.shared.addActivity(GameActivity(gameName: "Match-3 Puzzle", amount: 180))
         } else {
             if !hasAvailablePairs() {
                 isGameStarted = false
+                UserDefaultsManager.shared.addProgress(10)
+                UserDefaultsManager.shared.addActivity(GameActivity(gameName: "Match-3 Puzzle", amount: score * 10))
             }
         }
     }
@@ -92,97 +96,11 @@ class MatchPuzzlesViewModel: ObservableObject {
         slots = (0..<6).map { _ in
             (0..<6).map { _ in
                 allFruits.randomElement()!
-            }
-        }
-    }
-    
-    func spin() {
-        
-        
-        coin -= bet
-        isSpinning = true
-        spinningTimer?.invalidate()
-        winningPositions.removeAll()
-        win = 0
-        
-        let columns = 6
-        for col in 0..<columns {
-            let delay = Double(col) * 0.4
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                var spinCount = 0
-                let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
-                    for row in 0..<6 {
-                        self.slots[row][col] = self.allFruits.randomElement()!
-                    }
-                    spinCount += 1
-                    if spinCount > 12 + col * 4 {
-                        timer.invalidate()
-                        if col == columns - 1 {
-                            self.isSpinning = false
-                            self.checkWin()
-                            
-                        }
-                    }
-                }
-                RunLoop.current.add(timer, forMode: .common)
+                
             }
         }
     }
     
     
-    func checkWin() {
-        winningPositions = []
-        var totalWin = 0
-        var maxMultiplier = 0
-        let minCounts = [
-            "puzzle1": 5,
-            "puzzle2": 5,
-            "puzzle3": 5
-        ]
-        let multipliers = [
-            "puzzle1": 100,
-            "puzzle2": 50,
-            "puzzle3": 10
-        ]
-        
-        for row in 0..<3 {
-            let rowContent = slots[row]
-            var currentSymbol = rowContent[0]
-            var count = 1
-            for col in 1..<rowContent.count {
-                if rowContent[col] == currentSymbol {
-                    count += 1
-                } else {
-                    if let minCount = minCounts[currentSymbol], count >= minCount {
-                        totalWin += multipliers[currentSymbol] ?? 0
-                        if let multiplierValue = multipliers[currentSymbol], multiplierValue > maxMultiplier {
-                            maxMultiplier = multiplierValue
-                        }
-                        let startCol = col - count
-                        for c in startCol..<col {
-                            winningPositions.append((row: row, col: c))
-                        }
-                    }
-                    currentSymbol = rowContent[col]
-                    count = 1
-                }
-            }
-            if let minCount = minCounts[currentSymbol], count >= minCount {
-                totalWin += multipliers[currentSymbol] ?? 0
-                if let multiplierValue = multipliers[currentSymbol], multiplierValue > maxMultiplier {
-                    maxMultiplier = multiplierValue
-                }
-                let startCol = rowContent.count - count
-                for c in startCol..<rowContent.count {
-                    winningPositions.append((row: row, col: c))
-                }
-            }
-        }
-        
-        if totalWin != 0 {
-            coin -= bet
-            win = (totalWin + bet)
-            isWin = true
-        }
-    }
+    
 }

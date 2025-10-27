@@ -6,26 +6,61 @@ struct Achiev: Identifiable, Codable {
     var desc: String
     var goal: Int
     var currentGoal: Int
-    var isUnlocked = false
+    var isUnlocked: Bool {
+        currentGoal >= goal
+    }
 }
+
 struct HubAchievementsView: View {
     @StateObject var hubAchievementsModel =  HubAchievementsViewModel()
-    var achiev = [Achiev(name: "First Spin", desc: "Spin your first slot machine", goal: 1, currentGoal: 0),
+    @State var achiev = [Achiev(name: "First Spin", desc: "Spin your first slot machine", goal: 1, currentGoal: UserDefaults.standard.integer(forKey: "firstGame")),
                   Achiev(name: "Lucky Winner", desc: "Win 1000 coins in a single spin", goal: 1000, currentGoal: 0),
                   Achiev(name: "Speed Player", desc: "Complete 50 spins in one session", goal: 50, currentGoal: 0),
-                  Achiev(name: "High Roller", desc: "Bet 100 coins or more", goal: 100, currentGoal: 0),
+                  Achiev(name: "High Roller", desc: "Win 100 coins in a single spin", goal: 100, currentGoal: 0),
                   Achiev(name: "Jackpot Hunter", desc: "Win 10,000 coins in total", goal: 10000, currentGoal: 0),
                   Achiev(name: "Dedicated Player", desc: "Log in for 7 consecutive days", goal: 7, currentGoal: 0)]
     
+    func loadAchievementsProgress() -> [Achiev] {
+        var achiev = [
+            Achiev(name: "First Spin", desc: "Spin your first slot machine", goal: 1, currentGoal: UserDefaults.standard.integer(forKey: "firstGame")),
+            Achiev(name: "Lucky Winner", desc: "Win 1000 coins in a single spin", goal: 1000, currentGoal: 0),
+            Achiev(name: "Speed Player", desc: "Complete 50 spins in one session", goal: 50, currentGoal: 0),
+            Achiev(name: "High Roller", desc: "Win 100 coins in a single spin", goal: 100, currentGoal: 0),
+            Achiev(name: "Jackpot Hunter", desc: "Win 10,000 coins in total", goal: 10000, currentGoal: 0),
+            Achiev(name: "Dedicated Player", desc: "Log in for 7 consecutive days", goal: 7, currentGoal: 0)
+        ]
+
+        let activities = UserDefaultsManager.shared.lastActivities
+
+        if let maxWin = activities.lazy.filter({ $0.amount > 0 }).map({ $0.amount }).max() {
+            achiev[1].currentGoal = maxWin
+        }
+
+        achiev[2].currentGoal = UserDefaultsManager.shared.totalGames
+
+        if let maxWin = activities.lazy.filter({ $0.amount > 0 }).map({ $0.amount }).max() {
+            achiev[3].currentGoal = maxWin
+        }
+
+        let totalWin = activities.filter { $0.amount > 0 }.reduce(0) { $0 + $1.amount }
+        achiev[4].currentGoal = totalWin
+
+        achiev[5].currentGoal = 0
+
+        return achiev
+    }
+    
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color(red: 13/255, green: 18/255, blue: 24/255),
-                                    Color(red: 60/255, green: 15/255, blue: 102/255),
-                                    Color(red: 30/255, green: 26/255, blue: 77/255)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+            LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOn") ? [Color(red: 240/255, green: 213/255, blue: 222/255).opacity(0.8),
+                                                                                 Color(red: 252/255, green: 205/255, blue: 233/255).opacity(0.8),
+                                                                                 Color(red: 252/255, green: 248/255, blue: 248/255).opacity(0.8)] : [Color(red: 13/255, green: 18/255, blue: 24/255),
+                                                                                                                                                     Color(red: 60/255, green: 15/255, blue: 102/255),
+                                                                                                                                                     Color(red: 30/255, green: 26/255, blue: 77/255)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
             
             VStack(spacing: 32) {
                 Text("Achievements")
-                    .FontRegular(size: 16)
+                    .FontRegular(size: 16, color: UserDefaults.standard.bool(forKey: "isOn") ? Color(red: 177/255, green: 75/255, blue: 250/255) : .white)
                     .padding(.top)
                 
                 VStack(spacing: 0) {
@@ -39,6 +74,8 @@ struct HubAchievementsView: View {
                                     .stroke(Color(red: 102/255, green: 50/255, blue: 147/255), lineWidth: 3)
                                     .overlay {
                                         VStack(spacing: 20) {
+                                            let completedCount = loadAchievementsProgress().filter { $0.isUnlocked }.count
+                                            
                                             Image(.achev)
                                                 .resizable()
                                                 .frame(width: 48, height: 48)
@@ -47,7 +84,7 @@ struct HubAchievementsView: View {
                                                 .FontRegular(size: 16, color: Color(red: 232/255, green: 212/255, blue: 255/255))
                                             
                                             HStack(spacing: 5) {
-                                                Text("0")
+                                                Text("\(completedCount)")
                                                     .FontRegular(size: 36)
                                                 
                                                 Text("/6")
@@ -209,6 +246,9 @@ struct HubAchievementsView: View {
                     }
                 }
             }
+        }
+        .onAppear() {
+            achiev = loadAchievementsProgress()
         }
     }
 }

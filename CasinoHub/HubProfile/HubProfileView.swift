@@ -13,13 +13,15 @@ struct HubProfileView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color(red: 13/255, green: 18/255, blue: 24/255),
-                                    Color(red: 60/255, green: 15/255, blue: 102/255),
-                                    Color(red: 30/255, green: 26/255, blue: 77/255)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+            LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOn") ? [Color(red: 240/255, green: 213/255, blue: 222/255).opacity(0.8),
+                                                                                 Color(red: 252/255, green: 205/255, blue: 233/255).opacity(0.8),
+                                                                                 Color(red: 252/255, green: 248/255, blue: 248/255).opacity(0.8)] : [Color(red: 13/255, green: 18/255, blue: 24/255),
+                                                                                                                                                     Color(red: 60/255, green: 15/255, blue: 102/255),
+                                                                                                                                                     Color(red: 30/255, green: 26/255, blue: 77/255)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
             
             VStack(spacing: 32) {
                 Text("Profile")
-                    .FontRegular(size: 16)
+                    .FontRegular(size: 16, color: UserDefaults.standard.bool(forKey: "isOn") ? Color(red: 177/255, green: 75/255, blue: 250/255) : .white)
                     .padding(.top)
                 
                 ScrollView(showsIndicators: false) {
@@ -231,9 +233,11 @@ struct HubProfileView: View {
                                                         Text("Win Rate")
                                                             .FontRegular(size: 14, color: Color(red: 102/255, green: 191/255, blue: 143/255))
                                                         
-                                                        let totalGames = max(1, UserDefaultsManager.shared.totalGames) 
-                                                          let winRate = Double(UserDefaultsManager.shared.totalWin) / (Double(totalGames) * 100)
-                                                          Text(String(format: "%.1f%%", winRate))
+                                                        let activities = UserDefaultsManager.shared.lastActivities
+                                                        let totalGames = max(1, UserDefaultsManager.shared.totalGames)
+                                                        let winsCount = activities.filter { $0.amount > 0 }.count
+                                                        let winRate = Double(winsCount) / Double(totalGames) * 100
+                                                        Text(String(format: "%.1f%%", winRate))
                                                               .FontRegular(size: 16)
                                                     }
                                                     .padding(.horizontal, 34)
@@ -355,7 +359,6 @@ struct HubProfileView: View {
         }
         .onAppear {
             activities = UserDefaultsManager.shared.lastActivities
-            print(UserDefaultsManager.shared.lastActivities)
         }
     }
 }

@@ -16,14 +16,15 @@ struct HubMainView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color(red: 13/255, green: 18/255, blue: 24/255),
-                                    Color(red: 60/255, green: 15/255, blue: 102/255),
-                                    Color(red: 30/255, green: 26/255, blue: 77/255)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
-            
+            LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOn") ? [Color(red: 240/255, green: 213/255, blue: 222/255).opacity(0.8),
+                                                                                 Color(red: 252/255, green: 205/255, blue: 233/255).opacity(0.8),
+                                                                                 Color(red: 252/255, green: 248/255, blue: 248/255).opacity(0.8)] : [Color(red: 13/255, green: 18/255, blue: 24/255),
+                                                                                                                                                     Color(red: 60/255, green: 15/255, blue: 102/255),
+                                                                                                                                                     Color(red: 30/255, green: 26/255, blue: 77/255)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
             VStack(spacing: 32) {
                 VStack(spacing: 8) {
                     Text("Casino Hub")
-                        .FontRegular(size: 16)
+                        .FontRegular(size: 16, color: UserDefaults.standard.bool(forKey: "isOn") ? Color(red: 177/255, green: 75/255, blue: 250/255) : .white)
                         .padding(.top)
                     
                     HStack(spacing: 4) {

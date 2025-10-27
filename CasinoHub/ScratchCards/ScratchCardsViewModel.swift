@@ -10,7 +10,7 @@ class ScratchCardsViewModel: ObservableObject {
     @Published var cards: [Card] = [Card(image: "scratch1")]
     @Published var isWin = false
     @Published var winningIndexes: [Int] = []
-    @Published var balance = 1000
+    @Published var balance = UserDefaultsManager.shared.coins
     @Published var bet = 10
     @Published var win = 0
     @Published var screatched = 0
@@ -36,7 +36,8 @@ class ScratchCardsViewModel: ObservableObject {
     
     func startGame() {
         guard balance >= bet else { return }
-        balance -= bet
+        UserDefaultsManager.shared.removeCoins(bet)
+        balance = UserDefaultsManager.shared.coins
         resetCards()
         isPlaying = true
     }
@@ -58,7 +59,10 @@ class ScratchCardsViewModel: ObservableObject {
             isWin = true
             winningIndexes = openedScratch4Indexes
             win = bet * 10
-            balance += win
+            UserDefaultsManager.shared.addActivity(GameActivity(gameName: "Mines", amount: win))
+            UserDefaultsManager.shared.addCoins(win)
+            balance = UserDefaultsManager.shared.coins
+            UserDefaultsManager.shared.addActivity(GameActivity(gameName: "Scratch Cards", amount: bet))
         } else {
             isWin = false
             winningIndexes = []

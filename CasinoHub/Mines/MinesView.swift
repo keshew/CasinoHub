@@ -213,6 +213,7 @@ struct MinesView: View {
                                 viewModel.getReward()
                             } else {
                                 viewModel.startGame()
+                                UserDefaultsManager.shared.addProgress(10)
                             }
                         }) {
                             Rectangle()

@@ -11,7 +11,7 @@ class MinesViewModel: ObservableObject {
     }
     
     @Published var cards: [Card] = []
-    @Published var balance = 1000
+    @Published var balance = UserDefaultsManager.shared.coins
     @Published var bet = 20
     @Published var win = 0
     @Published var isPlaying = false
@@ -32,12 +32,15 @@ class MinesViewModel: ObservableObject {
 
     func startGame() {
         guard balance >= bet else { return }
-        balance -= bet
+        UserDefaultsManager.shared.removeCoins(bet)
+        balance = UserDefaultsManager.shared.coins
         resetCards()
         isPlaying = true
         gameOver = false
         correctAnswersCount = 0
         win = 0
+        
+         UserDefaultsManager.shared.incrementTotalGames()
     }
 
     func openCard(at index: Int) {
@@ -51,6 +54,7 @@ class MinesViewModel: ObservableObject {
             isPlaying = false
             win = 0
             correctAnswersCount = 0
+            UserDefaultsManager.shared.addActivity(GameActivity(gameName: "Mines", amount: -20))
         } else {
             correctAnswersCount += 1
             win += bet
@@ -59,6 +63,9 @@ class MinesViewModel: ObservableObject {
 
     func getReward() {
         balance += win
+        UserDefaultsManager.shared.addActivity(GameActivity(gameName: "Mines", amount: win))
+        UserDefaultsManager.shared.addCoins(win)
+        balance = UserDefaultsManager.shared.coins
         isPlaying = false
         gameOver = false
         win = 0

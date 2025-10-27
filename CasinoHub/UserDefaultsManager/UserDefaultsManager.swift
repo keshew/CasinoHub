@@ -122,61 +122,7 @@ class UserDefaultsManager {
             progress = updatedProgress
         }
     }
-
-    // MARK: Energy (0 to 100)
-    var energy: Int {
-        get { defaults.integer(forKey: "energy") }
-        set { defaults.set(min(max(newValue, 0), 100), forKey: "energy") }
-    }
-
-    func consumeEnergy() {
-        energy = max(energy - 1, 0)
-    }
-
-    func restoreEnergy(_ amount: Int) {
-        energy = min(energy + amount, 100)
-    }
-
-    // MARK: Achievements
-    var achievements: [Achiev] {
-        get {
-            if let data = defaults.data(forKey: "achievements"),
-               let achievs = try? JSONDecoder().decode([Achiev].self, from: data) {
-                return achievs
-            }
-            // Инициализация стандартного списка ачивок
-            let defaultAchievs = [
-                Achiev(name: "First Spin", desc: "Spin your first slot machine", goal: 1, currentGoal: 0),
-                Achiev(name: "Lucky Winner", desc: "Win 1000 coins in a single spin", goal: 1000, currentGoal: 0),
-                Achiev(name: "Speed Player", desc: "Complete 50 spins in one session", goal: 50, currentGoal: 0),
-                Achiev(name: "High Roller", desc: "Bet 100 coins or more", goal: 100, currentGoal: 0),
-                Achiev(name: "Jackpot Hunter", desc: "Win 10,000 coins in total", goal: 10000, currentGoal: 0),
-                Achiev(name: "Dedicated Player", desc: "Log in for 7 consecutive days", goal: 7, currentGoal: 0)
-            ]
-            saveAchievements(defaultAchievs)
-            return defaultAchievs
-        }
-        set {
-            saveAchievements(newValue)
-        }
-    }
-
-    private func saveAchievements(_ achievs: [Achiev]) {
-        if let data = try? JSONEncoder().encode(achievs) {
-            defaults.set(data, forKey: "achievements")
-        }
-    }
-
-    func updateAchievementProgress(name: String, incrementBy amount: Int = 1) {
-        var achievs = achievements
-        if let index = achievs.firstIndex(where: { $0.name == name }) {
-            var achiev = achievs[index]
-            achiev.currentGoal = min(achiev.currentGoal + amount, achiev.goal)
-            achievs[index] = achiev
-            achievements = achievs
-        }
-    }
-
+    
     func resetAll() {
         defaults.removeObject(forKey: "coins")
         defaults.removeObject(forKey: "totalWin")
@@ -187,5 +133,14 @@ class UserDefaultsManager {
         defaults.removeObject(forKey: "progress")
         defaults.removeObject(forKey: "energy")
         defaults.removeObject(forKey: "achievements")
+        addCoins(5000)
+    }
+    
+    func setFirstGamePlayed() {
+        defaults.set(1, forKey: "firstGame")
+    }
+
+    func isFirstGamePlayed() -> Bool {
+        return defaults.integer(forKey: "firstGame") == 1
     }
 }

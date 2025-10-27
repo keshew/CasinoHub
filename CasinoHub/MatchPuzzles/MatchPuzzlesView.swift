@@ -182,10 +182,15 @@ struct MatchPuzzlesView: View {
                             .padding(.top)
                         
                         Button(action: {
-                            classicFruitModel.isGameStarted = true
-                            classicFruitModel.resetSlots()
-                            classicFruitModel.moves = 0
-                            classicFruitModel.score = 0
+                            if classicFruitModel.coin >= 20 {
+                                UserDefaultsManager.shared.removeCoins(20)
+                                classicFruitModel.coin = UserDefaultsManager.shared.coins
+                                classicFruitModel.isGameStarted = true
+                                classicFruitModel.resetSlots()
+                                classicFruitModel.moves = 0
+                                classicFruitModel.score = 0
+                                UserDefaultsManager.shared.incrementTotalGames()
+                            }
                         }) {
                             Rectangle()
                                 .fill(LinearGradient(colors: [Color(red: 230/255, green: 0/255, blue: 117/255),

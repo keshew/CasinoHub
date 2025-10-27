@@ -7,6 +7,7 @@ struct CasinoHubApp: App {
         let key = "didAddInitialCoins"
         if !UserDefaults.standard.bool(forKey: key) {
             stats.addCoins(5000)
+            stats.setFirstGamePlayed()
             UserDefaults.standard.set(true, forKey: key)
         }
     }

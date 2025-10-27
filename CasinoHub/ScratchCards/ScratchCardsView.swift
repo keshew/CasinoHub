@@ -215,7 +215,11 @@ struct ScratchCardsView: View {
                             .padding(.top)
                         
                         Button(action: {
-                            viewModel.startGame()
+                            if UserDefaultsManager.shared.coins >= viewModel.bet {
+                                viewModel.startGame()
+                                UserDefaultsManager.shared.incrementTotalGames()
+                                UserDefaultsManager.shared.addProgress(10)
+                            }
                         }) {
                             Rectangle()
                                 .fill(LinearGradient(colors: [Color(red: 241/255, green: 177/255, blue: 0/255),
