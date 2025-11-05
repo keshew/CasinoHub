@@ -5,7 +5,7 @@ class MagicSpinViewModel: ObservableObject {
     @Published var slots: [[String]] = []
     @Published var coin =  UserDefaultsManager.shared.coins
     @Published var bet = 20
-    let allFruits = ["magic1", "magic2", "magic3"]
+    let allFruits = ["magic1", "magic2", "magic3", "magic4", "magic5", "magic6"]
     @Published var winningPositions: [(row: Int, col: Int)] = []
     @Published var isSpinning = false
     @Published var isStopSpininng = false
@@ -27,7 +27,10 @@ class MagicSpinViewModel: ObservableObject {
     let symbolArray = [
         Symbol(image: "magic1", value: "100"),
         Symbol(image: "magic2", value: "50"),
-        Symbol(image: "magic3", value: "10")
+        Symbol(image: "magic3", value: "25"),
+        Symbol(image: "magic4", value: "15"),
+        Symbol(image: "magic5", value: "10"),
+        Symbol(image: "magic6", value: "5")
     ]
     
     func resetSlots() {
@@ -80,12 +83,18 @@ class MagicSpinViewModel: ObservableObject {
         let minCounts = [
             "magic1": 5,
             "magic2": 5,
-            "magic3": 5
+            "magic3": 5,
+            "magic4": 5,
+            "magic5": 5,
+            "magic6": 5
         ]
         let multipliers = [
             "magic1": 100,
             "magic2": 50,
-            "magic3": 10
+            "magic3": 10,
+            "magic4": 100,
+            "magic5": 50,
+            "magic6": 10
         ]
         
         for row in 0..<3 {

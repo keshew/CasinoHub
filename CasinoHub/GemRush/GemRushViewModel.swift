@@ -5,7 +5,7 @@ class GemRushViewModel: ObservableObject {
     @Published var slots: [[String]] = []
     @Published var coin =   UserDefaultsManager.shared.coins
     @Published var bet = 25
-    let allFruits = ["rush1", "rush2", "rush3"]
+    let allFruits = ["rush1", "rush2", "rush3","rush4", "rush5", "rush6"]
     @Published var winningPositions: [(row: Int, col: Int)] = []
     @Published var isSpinning = false
     @Published var isStopSpininng = false
@@ -27,7 +27,10 @@ class GemRushViewModel: ObservableObject {
     let symbolArray = [
         Symbol(image: "rush1", value: "100"),
         Symbol(image: "rush2", value: "50"),
-        Symbol(image: "rush3", value: "10")
+        Symbol(image: "rush3", value: "20"),
+        Symbol(image: "rush4", value: "15"),
+        Symbol(image: "rush5", value: "10"),
+        Symbol(image: "rush6", value: "5")
     ]
     
     func resetSlots() {
@@ -81,12 +84,18 @@ class GemRushViewModel: ObservableObject {
         let minCounts = [
             "rush1": 5,
             "rush2": 5,
-            "rush3": 5
+            "rush3": 5,
+            "rush4": 5,
+            "rush5": 5,
+            "rush6": 5
         ]
         let multipliers = [
             "rush1": 100,
             "rush2": 50,
-            "rush3": 10
+            "rush3": 25,
+            "rush4": 15,
+            "rush5": 10,
+            "rush6": 5
         ]
         
         for row in 0..<3 {

@@ -5,7 +5,7 @@ class LuckyStarsViewModel: ObservableObject {
     @Published var slots: [[String]] = []
     @Published var coin =  UserDefaultsManager.shared.coins
     @Published var bet = 30
-    let allFruits = ["lucky1", "lucky2", "lucky3"]
+    let allFruits = ["lucky1", "lucky2", "lucky3", "lucky4", "lucky5", "lucky6"]
     @Published var winningPositions: [(row: Int, col: Int)] = []
     @Published var isSpinning = false
     @Published var isStopSpininng = false
@@ -27,7 +27,10 @@ class LuckyStarsViewModel: ObservableObject {
     let symbolArray = [
         Symbol(image: "lucky1", value: "100"),
         Symbol(image: "lucky2", value: "50"),
-        Symbol(image: "lucky3", value: "10")
+        Symbol(image: "lucky3", value: "10"),
+        Symbol(image: "lucky4", value: "100"),
+        Symbol(image: "lucky5", value: "50"),
+        Symbol(image: "lucky6", value: "10")
     ]
     
     func resetSlots() {
@@ -81,12 +84,18 @@ class LuckyStarsViewModel: ObservableObject {
         let minCounts = [
             "lucky1": 5,
             "lucky2": 5,
-            "lucky3": 5
+            "lucky3": 5,
+            "lucky4": 5,
+            "lucky5": 5,
+            "lucky6": 5
         ]
         let multipliers = [
             "lucky1": 100,
             "lucky2": 50,
-            "lucky3": 10
+            "lucky3": 25,
+            "lucky4": 15,
+            "lucky5": 10,
+            "lucky6": 5
         ]
         
         for row in 0..<3 {

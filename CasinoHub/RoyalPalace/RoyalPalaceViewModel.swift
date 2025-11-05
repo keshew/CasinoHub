@@ -5,7 +5,7 @@ class RoyalPalaceViewModel: ObservableObject {
     @Published var slots: [[String]] = []
     @Published var coin =  UserDefaultsManager.shared.coins
     @Published var bet = 50
-    let allFruits = ["royal1", "royal2", "royal3"]
+    let allFruits = ["royal1", "royal2", "royal3","royal4", "royal5", "royal6"]
     @Published var winningPositions: [(row: Int, col: Int)] = []
     @Published var isSpinning = false
     @Published var isStopSpininng = false
@@ -27,7 +27,10 @@ class RoyalPalaceViewModel: ObservableObject {
     let symbolArray = [
         Symbol(image: "royal1", value: "100"),
         Symbol(image: "royal2", value: "50"),
-        Symbol(image: "royal3", value: "10")
+        Symbol(image: "royal3", value: "25"),
+        Symbol(image: "royal4", value: "15"),
+        Symbol(image: "royal5", value: "10"),
+        Symbol(image: "royal6", value: "5")
     ]
     
     func resetSlots() {
@@ -81,12 +84,18 @@ class RoyalPalaceViewModel: ObservableObject {
         let minCounts = [
             "royal1": 5,
             "royal2": 5,
-            "royal3": 5
+            "royal3": 5,
+            "royal4": 5,
+            "royal5": 5,
+            "royal6": 5
         ]
         let multipliers = [
             "royal1": 100,
             "royal2": 50,
-            "royal3": 10
+            "royal3": 25,
+            "royal4": 15,
+            "royal5": 10,
+            "royal6": 5
         ]
         
         for row in 0..<3 {

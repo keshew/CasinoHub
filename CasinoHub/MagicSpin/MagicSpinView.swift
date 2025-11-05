@@ -49,7 +49,7 @@ struct MagicSpinView: View {
                     
                     Spacer()
                     
-                    Text("Magic Spin")
+                    Text("Sleepy Spin")
                         .FontSemiBold(size: 24, color: Color(red: 255/255, green: 0/255, blue: 204/255))
                         .shadow(radius: 2, y: 5)
                         .padding(.trailing)

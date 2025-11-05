@@ -15,6 +15,8 @@ struct HubGamesView: View {
     @State var isMatch = false
     @State var isMines = false
     @State var isScratch = false
+    @State var showAlert = false
+    
     var arrayGames = [Games(name: "Match-3 Puzzle",
                             imageName: "game2",
                             desc: "Match 3 or more gems in a row to score points and win coins",
@@ -39,6 +41,32 @@ struct HubGamesView: View {
                             gradient: LinearGradient(colors: [Color(red: 254/255, green: 105/255, blue: 0/255),
                                                               Color(red: 254/255, green: 154/255, blue: 2/255),
                                                               Color(red: 241/255, green: 177/255, blue: 0/255)], startPoint: .topLeading, endPoint: .bottomTrailing))]
+    
+    var closedGames = [Games(name: "Classic Fruits",
+                            imageName: "slot4",
+                            desc: "Traditional slot with cherries, lemons, and bars",
+                            min: "10",
+                            maxwin: "1 000",
+                            gradient: LinearGradient(colors: [Color(red: 230/255, green: 178/255, blue: 0/255),
+                                                              Color(red: 255/255, green: 73/255, blue: 32/255),
+                                                              Color(red: 152/255, green: 15/255, blue: 250/255)], startPoint: .topLeading, endPoint: .bottomTrailing)),
+                      Games(name: "Lepri Rush",
+                            imageName: "slot5",
+                            desc: "Sparkling gems and precious stones",
+                            min: "25",
+                            maxwin: "2 500",
+                            gradient: LinearGradient(colors: [Color(red: 23/255, green: 148/255, blue: 252/255),
+                                                              Color(red: 0/255, green: 219/255, blue: 86/255),
+                                                              Color(red: 48/255, green: 0/255, blue: 150/255)], startPoint: .topLeading, endPoint: .bottomTrailing)),
+                      Games(name: "Greece Palace",
+                            imageName: "slot6",
+                            desc: "Kings, queens, and golden crowns",
+                            min: "50",
+                            maxwin: "5 000",
+                            gradient: LinearGradient(colors: [Color(red: 158/255, green: 0/255, blue: 255/255),
+                                                              Color(red: 255/255, green: 223/255, blue: 0/255),
+                                                              Color(red: 240/255, green: 0/255, blue: 48/255)], startPoint: .topLeading, endPoint: .bottomTrailing))]
+    
     var body: some View {
         ZStack {
             LinearGradient(colors: UserDefaults.standard.bool(forKey: "isOn") ? [Color(red: 240/255, green: 213/255, blue: 222/255).opacity(0.8),
@@ -158,6 +186,116 @@ struct HubGamesView: View {
                                             }
                                     }
                                     .frame(height: 270)
+                                    .cornerRadius(24)
+                            }
+                            
+                            ForEach(closedGames, id: \.id) { item in
+                                Rectangle()
+                                    .fill(item.gradient)
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 24)
+                                            .stroke(Color(red: 137/255, green: 75/255, blue: 52/255), lineWidth: 0)
+                                            .overlay {
+                                                VStack(spacing: 34) {
+                                                    HStack(alignment: .top) {
+                                                        Image(item.imageName)
+                                                            .resizable()
+                                                            .frame(width: 80, height: 80)
+                                                            .blur(radius: 10)
+                                                        
+                                                        VStack(alignment: .leading, spacing: 10) {
+                                                            HStack {
+                                                                Text(item.name)
+                                                                    .FontRegular(size: 16, color: Color(red: 254/255, green: 252/255, blue: 231/255))
+                                                                
+                                                                Image(.themeYellow)
+                                                                    .resizable()
+                                                                    .frame(width: 20, height: 20)
+                                                            }
+                                                            .blur(radius: 5)
+                                                            
+                                                            Text(item.desc)
+                                                                .FontRegular(size: 14, color: Color(red: 255/255, green: 249/255, blue: 194/255).opacity(0.8))
+                                                                .blur(radius: 5)
+                                                            
+                                                            HStack(spacing: 10) {
+                                                                Rectangle()
+                                                                    .fill(.white.opacity(0.2))
+                                                                    .overlay {
+                                                                        RoundedRectangle(cornerRadius: 16)
+                                                                            .stroke(.white.opacity(0.3), lineWidth: 3)
+                                                                            .overlay {
+                                                                                Text("Min:\n\(item.min)")
+                                                                                    .FontRegular(size: 14)
+                                                                            }
+                                                                    }
+                                                                    .frame(width: 57, height: 54)
+                                                                    .cornerRadius(16)
+                                                                
+                                                                Rectangle()
+                                                                    .fill(.white.opacity(0.2))
+                                                                    .overlay {
+                                                                        RoundedRectangle(cornerRadius: 16)
+                                                                            .stroke(.white.opacity(0.3), lineWidth: 3)
+                                                                            .overlay {
+                                                                                Text("Max Win:\n\(item.maxwin)")
+                                                                                    .FontRegular(size: 14)
+                                                                            }
+                                                                    }
+                                                                    .frame(width: 96, height: 54)
+                                                                    .cornerRadius(16)
+                                                            }
+                                                            .padding(.top, 10)
+                                                            .blur(radius: 5)
+                                                            
+                                                         
+                                                        }
+                                                        .padding(.horizontal, 5)
+                                                        
+                                                        Spacer()
+                                                    }
+                                                    .padding(.horizontal)
+                                                    
+                                                    Button(action: {
+                                                        showAlert = true
+                                                    }) {
+                                                        Rectangle()
+                                                            .fill(.white.opacity(0.2))
+                                                            .overlay {
+                                                                RoundedRectangle(cornerRadius: 16)
+                                                                    .stroke(.white.opacity(0.3), lineWidth: 3)
+                                                                    .overlay {
+                                                                        HStack {
+                                                                            Text("Buy a game")
+                                                                                .FontSemiBold(size: 14)
+                                                                            
+                                                                            Spacer()
+
+                                                                            Text("100 000")
+                                                                                .FontHeavy(size: 14)
+                                                                            
+                                                                            Image("coins")
+                                                                                .resizable()
+                                                                                .frame(width: 27, height: 27)
+                                                                                .foregroundStyle(.white)
+                                                                        }
+                                                                        .padding(.horizontal)
+                                                                    }
+                                                            }
+                                                            .frame(height: 52)
+                                                            .cornerRadius(16)
+                                                    }
+                                                    .padding(.top)
+                                                    .padding(.horizontal)
+                                                    .alert("Not enough coin", isPresented: $showAlert) {
+                                                        Button("OK") {
+                                                            showAlert.toggle()
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                    }
+                                    .frame(height: 240)
                                     .cornerRadius(24)
                             }
                             

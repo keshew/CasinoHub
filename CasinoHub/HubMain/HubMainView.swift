@@ -23,7 +23,7 @@ struct HubMainView: View {
                                                                                                                                                      Color(red: 30/255, green: 26/255, blue: 77/255)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
             VStack(spacing: 32) {
                 VStack(spacing: 8) {
-                    Text("Casino Hub")
+                    Text("Grand Fortune")
                         .FontRegular(size: 16, color: UserDefaults.standard.bool(forKey: "isOn") ? Color(red: 177/255, green: 75/255, blue: 250/255) : .white)
                         .padding(.top)
                     

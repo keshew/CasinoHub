@@ -4,9 +4,6 @@ struct RoyalPalaceView: View {
     @StateObject var classicFruitModel =  RoyalPalaceViewModel()
     @State var showAlert = false
     @Environment(\.presentationMode) var presentationMode
-    let symbolArray = [Symbol(image: "royal1", value: "100"),
-                       Symbol(image: "royal2", value: "50"),
-                       Symbol(image: "royal3", value: "10")]
     
     var body: some View {
         ZStack {
@@ -49,7 +46,7 @@ struct RoyalPalaceView: View {
                     
                     Spacer()
                     
-                    Text("Royal Palace")
+                    Text("Greece Palace")
                         .FontSemiBold(size: 24, color: Color(red: 255/255, green: 215/255, blue: 0/255))
                         .shadow(radius: 2, y: 5)
                         .padding(.trailing)

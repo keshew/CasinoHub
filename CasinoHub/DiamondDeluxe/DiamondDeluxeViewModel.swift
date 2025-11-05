@@ -5,7 +5,7 @@ class DiamondDeluxeViewModel: ObservableObject {
     @Published var slots: [[String]] = []
     @Published var coin =   UserDefaultsManager.shared.coins
     @Published var bet = 100
-    let allFruits = ["diamond1", "diamond2", "diamond3"]
+    let allFruits = ["diamond1", "diamond2", "diamond3", "diamond4", "diamond5", "diamond6"]
     @Published var winningPositions: [(row: Int, col: Int)] = []
     @Published var isSpinning = false
     @Published var isStopSpininng = false
@@ -27,7 +27,10 @@ class DiamondDeluxeViewModel: ObservableObject {
     let symbolArray = [
         Symbol(image: "diamond1", value: "100"),
         Symbol(image: "diamond2", value: "50"),
-        Symbol(image: "diamond3", value: "10")
+        Symbol(image: "diamond3", value: "25"),
+        Symbol(image: "diamond4", value: "15"),
+        Symbol(image: "diamond5", value: "10"),
+        Symbol(image: "diamond6", value: "5")
     ]
     
     func resetSlots() {
@@ -81,12 +84,18 @@ class DiamondDeluxeViewModel: ObservableObject {
         let minCounts = [
             "diamond1": 5,
             "diamond2": 5,
-            "diamond3": 5
+            "diamond3": 5,
+            "diamond4": 5,
+            "diamond5": 5,
+            "diamond6": 5
         ]
         let multipliers = [
             "diamond1": 100,
             "diamond2": 50,
-            "diamond3": 10
+            "diamond3": 25,
+            "diamond4": 15,
+            "diamond5": 10,
+            "diamond6": 5
         ]
         
         for row in 0..<3 {

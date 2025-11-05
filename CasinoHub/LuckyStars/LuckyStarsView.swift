@@ -4,9 +4,6 @@ struct LuckyStarsView: View {
     @StateObject var classicFruitModel =  LuckyStarsViewModel()
     @State var showAlert = false
     @Environment(\.presentationMode) var presentationMode
-    let symbolArray = [Symbol(image: "lucky1", value: "100"),
-                       Symbol(image: "lucky2", value: "50"),
-                       Symbol(image: "lucky3", value: "10")]
     
     var body: some View {
         ZStack {
@@ -14,9 +11,9 @@ struct LuckyStarsView: View {
                 Image(.luckybg)
                     .resizable()
                 
-                LinearGradient(colors: [Color(red: 94/255, green: 13/255, blue: 102/255),
-                                        Color(red: 92/255, green: 17/255, blue: 104/255),
-                                        Color(red: 76/255, green: 26/255, blue: 78/255)], startPoint: .top, endPoint: .bottom).opacity(0.7)
+                LinearGradient(colors: [Color(red: 102/255, green: 97/255, blue: 3/255),
+                                        Color(red: 104/255, green: 85/255, blue: 12/255),
+                                        Color(red: 77/255, green: 65/255, blue: 26/255)], startPoint: .top, endPoint: .bottom).opacity(0.7)
                 
                 Rectangle()
                     .fill(.black.opacity(0.5))
@@ -49,8 +46,8 @@ struct LuckyStarsView: View {
                     
                     Spacer()
                     
-                    Text("Lucky Stars")
-                        .FontSemiBold(size: 24, color: Color(red: 21/255, green: 93/255, blue: 251/255))
+                    Text("Egypt Paradise")
+                        .FontSemiBold(size: 24, color: Color(red: 255/255, green: 215/255, blue: 0/255))
                         .shadow(radius: 2, y: 5)
                         .padding(.trailing)
                     
@@ -78,12 +75,12 @@ struct LuckyStarsView: View {
                 ScrollView(showsIndicators: false) {
                     VStack {
                         Rectangle()
-                            .fill(LinearGradient(colors: [Color(red: 21/255, green: 93/255, blue: 251/255),
-                                                          Color(red: 97/255, green: 95/255, blue: 255/255),
-                                                          Color(red: 152/255, green: 16/255, blue: 251/255)], startPoint: .leading, endPoint: .trailing))
+                            .fill(LinearGradient(colors: [Color(red: 231/255, green: 135/255, blue: 0/255),
+                                                          Color(red: 255/255, green: 185/255, blue: 31/255),
+                                                          Color(red: 245/255, green: 196/255, blue: 0/255)], startPoint: .leading, endPoint: .trailing))
                             .overlay {
                                 RoundedRectangle(cornerRadius: 18)
-                                    .stroke(Color(red: 78/255, green: 126/255, blue: 235/255), lineWidth: 5)
+                                    .stroke(Color(red: 223/255, green: 157/255, blue: 65/255), lineWidth: 5)
                                     .overlay {
                                         Text("Win:\(classicFruitModel.win)")
                                             .FontRegular(size: 26, color: Color(red: 255/255, green: 215/255, blue: 0/255))
@@ -95,12 +92,12 @@ struct LuckyStarsView: View {
                             .padding(.horizontal)
                         
                         Rectangle()
-                            .fill(LinearGradient(colors: [Color(red: 21/255, green: 93/255, blue: 251/255).opacity(0.7),
-                                                          Color(red: 77/255, green: 24/255, blue: 154/255).opacity(0.6),
-                                                          Color(red: 152/255, green: 16/255, blue: 251/255).opacity(0.7)], startPoint: .top, endPoint: .bottom))
+                            .fill(LinearGradient(colors: [Color(red: 118/255, green: 139/255, blue: 21/255).opacity(0.7),
+                                                          Color(red: 154/255, green: 154/255, blue: 23/255).opacity(0.6),
+                                                          Color(red: 133/255, green: 127/255, blue: 44/255).opacity(0.7)], startPoint: .top, endPoint: .bottom))
                             .overlay {
                                 RoundedRectangle(cornerRadius: 18)
-                                    .stroke(Color(red: 47/255, green: 93/255, blue: 209/255).opacity(0.4), lineWidth: 5)
+                                    .stroke(Color(red: 191/255, green: 163/255, blue: 20/255).opacity(0.4), lineWidth: 5)
                                     .overlay {
                                         VStack(spacing: 20) {
                                             ForEach(0..<3, id: \.self) { row in
@@ -147,7 +144,7 @@ struct LuckyStarsView: View {
                                                           Color(red: 30/255, green: 41/255, blue: 57/255).opacity(0.7)], startPoint: .top, endPoint: .bottom))
                             .overlay {
                                 RoundedRectangle(cornerRadius: 18)
-                                    .stroke(Color(red: 21/255, green: 64/255, blue: 130/255), lineWidth: 4)
+                                    .stroke(Color(red: 128/255, green: 95/255, blue: 28/255).opacity(1), lineWidth: 4)
                                     .overlay {
                                         HStack(alignment: .bottom, spacing: 20) {
                                             Button(action: {
@@ -171,11 +168,11 @@ struct LuckyStarsView: View {
                                                 }
                                                 
                                                 Rectangle()
-                                                    .fill(LinearGradient(colors: [Color(red: 21/255, green: 93/255, blue: 251/255),
-                                                                                  Color(red: 152/255, green: 16/255, blue: 251/255)], startPoint: .leading, endPoint: .trailing))
+                                                    .fill(LinearGradient(colors: [Color(red: 239/255, green: 250/255, blue: 14/255),
+                                                                                  Color(red: 72/255, green: 85/255, blue: 0/255)], startPoint: .leading, endPoint: .trailing))
                                                     .overlay {
                                                         RoundedRectangle(cornerRadius: 16)
-                                                            .stroke(Color(red: 21/255, green: 93/255, blue: 251/255).opacity(0.5), lineWidth: 3)
+                                                            .stroke(Color(red: 128/255, green: 95/255, blue: 28/255).opacity(0.5), lineWidth: 3)
                                                             .overlay {
                                                                 Text("\(classicFruitModel.bet)")
                                                                     .FontRegular(size: 16)

@@ -4,9 +4,6 @@ struct GemRushView: View {
     @StateObject var classicFruitModel =  GemRushViewModel()
     @State var showAlert = false
     @Environment(\.presentationMode) var presentationMode
-    let symbolArray = [Symbol(image: "rush1", value: "100"),
-                       Symbol(image: "rush2", value: "50"),
-                       Symbol(image: "rush3", value: "10")]
     
     var body: some View {
         ZStack {
@@ -49,7 +46,7 @@ struct GemRushView: View {
                     
                     Spacer()
                     
-                    Text("Gem Rush")
+                    Text("Lepri Rush")
                         .FontSemiBold(size: 24, color: Color(red: 0/255, green: 255/255, blue: 94/255))
                         .shadow(radius: 2, y: 5)
                         .padding(.trailing)

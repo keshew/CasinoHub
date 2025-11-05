@@ -4,9 +4,6 @@ struct DiamondDeluxeView: View {
     @StateObject var classicFruitModel =  DiamondDeluxeViewModel()
     @State var showAlert = false
     @Environment(\.presentationMode) var presentationMode
-    let symbolArray = [Symbol(image: "diamond1", value: "100"),
-                       Symbol(image: "diamond2", value: "50"),
-                       Symbol(image: "diamond3", value: "10")]
     
     var body: some View {
         ZStack {
@@ -49,7 +46,7 @@ struct DiamondDeluxeView: View {
                     
                     Spacer()
                     
-                    Text("Diamond Deluxe")
+                    Text("Aqua Deluxe")
                         .FontSemiBold(size: 24, color: Color(red: 22/255, green: 187/255, blue: 221/255))
                         .shadow(radius: 2, y: 5)
                         .padding(.trailing)
