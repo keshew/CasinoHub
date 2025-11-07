@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct HubProfileView: View {
-    @StateObject var hubProfileModel =  HubProfileViewModel()
     @State private var activities: [GameActivity] = []
     @State private var level: Int = max(1, UserDefaultsManager.shared.level)
     @State private var progress: Int = UserDefaultsManager.shared.progress

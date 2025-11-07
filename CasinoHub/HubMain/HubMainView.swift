@@ -388,3 +388,13 @@ struct HubMainView: View {
     HubMainView(selectedTab: .constant(.Home))
 }
 
+class HubMainViewModel: ObservableObject {
+    @Published var coins = 0
+    
+    init() {
+        self.coins = UserDefaultsManager.shared.coins
+        NotificationCenter.default.addObserver(forName: Notification.Name("UserResourcesUpdated"), object: nil, queue: .main) { _ in
+            self.coins = UserDefaultsManager.shared.coins
+        }
+    }
+}

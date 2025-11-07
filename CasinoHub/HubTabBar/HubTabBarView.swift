@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct HubTabBarView: View {
-    @StateObject var hubTabBarModel =  HubTabBarViewModel()
     @State private var selectedTab: CustomTabBar.TabType = .Home
     
     var body: some View {

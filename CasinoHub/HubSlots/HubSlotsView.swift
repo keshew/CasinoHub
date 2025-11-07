@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct HubSlotsView: View {
-    @StateObject var hubSlotsModel =  HubSlotsViewModel()
     @State var isFruit = false
     @State var isGem = false
     @State var isRoyal = false

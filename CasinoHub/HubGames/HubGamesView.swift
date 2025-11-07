@@ -11,7 +11,6 @@ struct Games: Identifiable {
 }
 
 struct HubGamesView: View {
-    @StateObject var hubGamesModel =  HubGamesViewModel()
     @State var isMatch = false
     @State var isMines = false
     @State var isScratch = false

@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "86BD2A9F2EACB8ED0048FA05"
-               BuildableName = "Grand Fortune Casino.app"
-               BlueprintName = "Grand Fortune Casino"
-               ReferencedContainer = "container:Grand Fortune Casino.xcodeproj">
+               BuildableName = "Golden Era Casino.app"
+               BlueprintName = "Golden Era Casino"
+               ReferencedContainer = "container:Golden Era Casino.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "86BD2A9F2EACB8ED0048FA05"
-            BuildableName = "Grand Fortune Casino.app"
-            BlueprintName = "Grand Fortune Casino"
-            ReferencedContainer = "container:Grand Fortune Casino.xcodeproj">
+            BuildableName = "Golden Era Casino.app"
+            BlueprintName = "Golden Era Casino"
+            ReferencedContainer = "container:Golden Era Casino.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "86BD2A9F2EACB8ED0048FA05"
-            BuildableName = "Grand Fortune Casino.app"
-            BlueprintName = "Grand Fortune Casino"
-            ReferencedContainer = "container:Grand Fortune Casino.xcodeproj">
+            BuildableName = "Golden Era Casino.app"
+            BlueprintName = "Golden Era Casino"
+            ReferencedContainer = "container:Golden Era Casino.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

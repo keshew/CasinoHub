@@ -12,7 +12,6 @@ struct Achiev: Identifiable, Codable {
 }
 
 struct HubAchievementsView: View {
-    @StateObject var hubAchievementsModel =  HubAchievementsViewModel()
     @State var achiev = [Achiev(name: "First Spin", desc: "Spin your first slot machine", goal: 1, currentGoal: UserDefaults.standard.integer(forKey: "firstGame")),
                   Achiev(name: "Lucky Winner", desc: "Win 1000 coins in a single spin", goal: 1000, currentGoal: 0),
                   Achiev(name: "Speed Player", desc: "Complete 50 spins in one session", goal: 50, currentGoal: 0),

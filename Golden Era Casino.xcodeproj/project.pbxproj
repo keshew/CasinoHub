@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		86BD2AA02EACB8ED0048FA05 /* Grand Fortune Casino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grand Fortune Casino.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		86BD2AA02EACB8ED0048FA05 /* Golden Era Casino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Golden Era Casino.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		86BD2B342EACB9BE0048FA05 /* Exceptions for "CasinoHub" folder in "Grand Fortune Casino" target */ = {
+		86BD2B342EACB9BE0048FA05 /* Exceptions for "CasinoHub" folder in "Golden Era Casino" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 86BD2A9F2EACB8ED0048FA05 /* Grand Fortune Casino */;
+			target = 86BD2A9F2EACB8ED0048FA05 /* Golden Era Casino */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -24,7 +24,7 @@
 		86BD2AA22EACB8ED0048FA05 /* CasinoHub */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				86BD2B342EACB9BE0048FA05 /* Exceptions for "CasinoHub" folder in "Grand Fortune Casino" target */,
+				86BD2B342EACB9BE0048FA05 /* Exceptions for "CasinoHub" folder in "Golden Era Casino" target */,
 			);
 			path = CasinoHub;
 			sourceTree = "<group>";
@@ -53,7 +53,7 @@
 		86BD2AA12EACB8ED0048FA05 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				86BD2AA02EACB8ED0048FA05 /* Grand Fortune Casino.app */,
+				86BD2AA02EACB8ED0048FA05 /* Golden Era Casino.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,9 +61,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		86BD2A9F2EACB8ED0048FA05 /* Grand Fortune Casino */ = {
+		86BD2A9F2EACB8ED0048FA05 /* Golden Era Casino */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 86BD2AAE2EACB8EF0048FA05 /* Build configuration list for PBXNativeTarget "Grand Fortune Casino" */;
+			buildConfigurationList = 86BD2AAE2EACB8EF0048FA05 /* Build configuration list for PBXNativeTarget "Golden Era Casino" */;
 			buildPhases = (
 				86BD2A9C2EACB8ED0048FA05 /* Sources */,
 				86BD2A9D2EACB8ED0048FA05 /* Frameworks */,
@@ -76,11 +76,11 @@
 			fileSystemSynchronizedGroups = (
 				86BD2AA22EACB8ED0048FA05 /* CasinoHub */,
 			);
-			name = "Grand Fortune Casino";
+			name = "Golden Era Casino";
 			packageProductDependencies = (
 			);
 			productName = CasinoHub;
-			productReference = 86BD2AA02EACB8ED0048FA05 /* Grand Fortune Casino.app */;
+			productReference = 86BD2AA02EACB8ED0048FA05 /* Golden Era Casino.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -98,7 +98,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 86BD2A9B2EACB8ED0048FA05 /* Build configuration list for PBXProject "Grand Fortune Casino" */;
+			buildConfigurationList = 86BD2A9B2EACB8ED0048FA05 /* Build configuration list for PBXProject "Golden Era Casino" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -112,7 +112,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				86BD2A9F2EACB8ED0048FA05 /* Grand Fortune Casino */,
+				86BD2A9F2EACB8ED0048FA05 /* Golden Era Casino */,
 			);
 		};
 /* End PBXProject section */
@@ -268,7 +268,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CasinoHub/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Grand Fortune Casino";
+				INFOPLIST_KEY_CFBundleDisplayName = "Golden Era Casino";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -303,7 +303,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CasinoHub/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Grand Fortune Casino";
+				INFOPLIST_KEY_CFBundleDisplayName = "Golden Era Casino";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -330,7 +330,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		86BD2A9B2EACB8ED0048FA05 /* Build configuration list for PBXProject "Grand Fortune Casino" */ = {
+		86BD2A9B2EACB8ED0048FA05 /* Build configuration list for PBXProject "Golden Era Casino" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				86BD2AAC2EACB8EF0048FA05 /* Debug */,
@@ -339,7 +339,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		86BD2AAE2EACB8EF0048FA05 /* Build configuration list for PBXNativeTarget "Grand Fortune Casino" */ = {
+		86BD2AAE2EACB8EF0048FA05 /* Build configuration list for PBXNativeTarget "Golden Era Casino" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				86BD2AAF2EACB8EF0048FA05 /* Debug */,
